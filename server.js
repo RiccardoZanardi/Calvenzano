@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
@@ -22,8 +23,14 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Configurazione sessioni
+// Configurazione sessioni con FileStore (risolve problemi MemoryStore su Render)
 app.use(session({
+    store: new FileStore({
+        path: path.join(__dirname, 'sessions'),
+        encrypt: true,
+        secret: process.env.SESSION_SECRET || 'fallback-secret-key',
+        ttl: 86400 // 24 ore in secondi
+    }),
     secret: process.env.SESSION_SECRET || 'fallback-secret-key',
     resave: false,
     saveUninitialized: false,

@@ -4,6 +4,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Environment variables and sensitive data
+.env
+sessions/
+
 # Runtime data
 pids
 *.pid
