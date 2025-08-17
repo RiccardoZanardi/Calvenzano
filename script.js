@@ -18,9 +18,7 @@ class FinanceApp {
         this.currentFineStatus = 'pagate'; // Default fine status filter
         this.currentCategoryFineStatus = 'pagate'; // Default category fine status filter
         this.selectedMembers = new Set(); // Initialize selected members set
-        this.loadData();
         this.setupEventListeners();
-        this.updateAllSections();
         this.generateActivities();
         this.initializeTabs();
         this.updateRestoreButton();
@@ -4422,9 +4420,39 @@ async function addNewCategory() {
 }
 
 // Initialize the application when DOM is loaded
+// Loading Screen Management
+function showLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    const appContainer = document.getElementById('appContainer');
+    
+    if (loadingScreen) {
+        loadingScreen.classList.remove('hidden');
+    }
+    if (appContainer) {
+        appContainer.classList.remove('app-visible');
+        appContainer.classList.add('app-hidden');
+    }
+}
+
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    const appContainer = document.getElementById('appContainer');
+    
+    if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+    }
+    if (appContainer) {
+        appContainer.classList.remove('app-hidden');
+        appContainer.classList.add('app-visible');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         console.log('🚀 Inizializzazione applicazione...');
+        
+        // Show loading screen
+        showLoadingScreen();
         
         // Create app instance
         window.financeApp = new FinanceApp();
@@ -4433,20 +4461,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Initialize global functions first
         initializeGlobalFunctions();
         
+        // Initialize the app (setup event listeners, etc.)
+        window.financeApp.init();
+        
         // Load data asynchronously
         await window.financeApp.loadData();
         
-        // Initialize the app (this will setup event listeners and update UI)
-        window.financeApp.init();
+        // Update all sections with loaded data
+        window.financeApp.updateAllSections();
         
-        // Ensure all sections are properly updated
+        // Small delay to ensure smooth transition
         setTimeout(() => {
-            window.financeApp.updateAllSections();
-        }, 100);
+            hideLoadingScreen();
+            console.log('✅ Applicazione inizializzata con successo');
+        }, 300);
         
-        console.log('✅ Applicazione inizializzata con successo');
     } catch (error) {
         console.error('❌ Errore durante l\'inizializzazione:', error);
+        
+        // Hide loading screen even on error
+        hideLoadingScreen();
+        
         // Try to initialize global functions anyway
         try {
             initializeGlobalFunctions();

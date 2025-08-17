@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>ASD Calvenzano</h2>
+            <p>Caricamento dati in corso...</p>
+        </div>
+    </div>
+    
     <!-- Mobile Menu Toggle -->
     <button class="mobile-menu-toggle" id="mobileMenuToggle">
         <span></span>
@@ -15,7 +24,7 @@
     </button>
     
     <!-- Main Application Container -->
-    <div id="appContainer">
+    <div id="appContainer" class="app-hidden">
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <div class="sidebar-header">
