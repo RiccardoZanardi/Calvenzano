@@ -2601,7 +2601,7 @@ class FinanceApp {
 
     // Delete Assigned and/or Paid Fines
     async deleteAssignedAndPaidFines() {
-        if (!confirm('Sei sicuro di voler eliminare tutte le multe assegnate e/o pagate dal sistema? Potrai ripristinare entro 30 minuti.')) {
+        if (!confirm('Sei sicuro di voler azzerare completamente la cassa (multe e offerte libere)? Potrai ripristinare entro 30 minuti.')) {
             return;
         }
 
@@ -2610,7 +2610,8 @@ class FinanceApp {
             timestamp: new Date().toISOString(),
             members: JSON.parse(JSON.stringify(this.state.members)), // Deep copy
             categories: JSON.parse(JSON.stringify(this.state.categories)),
-            activities: JSON.parse(JSON.stringify(this.state.activities))
+            activities: JSON.parse(JSON.stringify(this.state.activities)),
+            globalDonations: JSON.parse(JSON.stringify(this.state.globalDonations || []))
         };
 
         // Generate PDF before deletion
@@ -2618,8 +2619,10 @@ class FinanceApp {
 
         let deletedCount = 0;
         let totalDeletedAmount = 0;
+        let deletedDonationsCount = 0;
+        let totalDeletedDonationsAmount = 0;
 
-        // Iterate through all members
+        // Iterate through all members to delete fines
         this.state.members.forEach(member => {
             if (member.fines && member.fines.length > 0) {
                 // Filter out assigned and paid fines
@@ -2639,12 +2642,21 @@ class FinanceApp {
             }
         });
 
+        // Delete global donations (offerte libere)
+        if (this.state.globalDonations && this.state.globalDonations.length > 0) {
+            deletedDonationsCount = this.state.globalDonations.length;
+            totalDeletedDonationsAmount = this.state.globalDonations.reduce((sum, donation) => sum + donation.amount, 0);
+            this.state.globalDonations = [];
+        }
+
         // Store backup in localStorage with expiration
         localStorage.setItem('multeBackup', JSON.stringify(backupData));
         localStorage.setItem('multeBackupExpiry', (Date.now() + 30 * 60 * 1000).toString()); // 30 minutes
 
         // Add activity log
-        this.addActivity(`Eliminate ${deletedCount} multe per un totale di €${totalDeletedAmount}`, 'fine', new Date());
+        const totalAmount = totalDeletedAmount + totalDeletedDonationsAmount;
+        const activityMessage = `Cassa azzerata: ${deletedCount} multe (€${totalDeletedAmount}) + ${deletedDonationsCount} offerte libere (€${totalDeletedDonationsAmount})`;
+        this.addActivity(activityMessage, 'fine', new Date());
         
         // Save data and update UI
         await this.saveData();
@@ -2652,7 +2664,7 @@ class FinanceApp {
         this.updateRestoreButton();
         
         this.showNotification(
-            `Eliminate ${deletedCount} multe per un totale di €${totalDeletedAmount}. PDF generato automaticamente. Ripristino disponibile per 30 minuti.`, 
+            `Cassa azzerata: ${deletedCount} multe e ${deletedDonationsCount} offerte libere per un totale di €${totalAmount}. PDF generato automaticamente. Ripristino disponibile per 30 minuti.`, 
             'success'
         );
     }
@@ -2814,13 +2826,14 @@ class FinanceApp {
             this.state.members = backup.members;
             this.state.categories = backup.categories;
             this.state.activities = backup.activities;
+            this.state.globalDonations = backup.globalDonations || [];
             
             // Remove backup from localStorage
             localStorage.removeItem('multeBackup');
             localStorage.removeItem('multeBackupExpiry');
             
             // Add activity log
-            this.addActivity('Ripristinate le multe eliminate', 'fine', new Date());
+            this.addActivity('Ripristinate le multe e offerte libere eliminate', 'fine', new Date());
             
             // Save and update
             await this.saveData();
