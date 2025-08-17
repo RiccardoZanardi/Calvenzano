@@ -8,6 +8,11 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3002;
 
+// Abilita trust proxy in produzione (necessario per cookie 'secure' e rilevare HTTPS dietro proxy)
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
+
 // Configurazione middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,18 +32,20 @@ app.use(session({
 // Middleware per forzare HTTPS in produzione
 if (process.env.NODE_ENV === 'production') {
     app.use((req, res, next) => {
-        if (req.header('x-forwarded-proto') !== 'https') {
-            res.redirect(`https://${req.header('host')}${req.url}`);
-        } else {
-            next();
+        // consenti health check senza redirect
+        if (req.originalUrl === '/healthz') return next();
+        const isSecure = req.secure || req.get('x-forwarded-proto') === 'https';
+        if (!isSecure) {
+            return res.redirect(`https://${req.get('host')}${req.originalUrl}`);
         }
+        next();
     });
 }
 
 // Middleware per servire file statici solo se autenticato
 app.use((req, res, next) => {
     // Permetti accesso a login.html e risorse di login senza autenticazione
-    if (req.path === '/login.html' || req.path === '/login' || req.path.startsWith('/login-assets/')) {
+    if (req.path === '/login.html' || req.path === '/login' || req.path.startsWith('/login-assets/') || req.path === '/healthz') {
         return next();
     }
     
@@ -52,6 +59,11 @@ app.use((req, res, next) => {
 
 // Servire file statici
 app.use(express.static(__dirname));
+
+// Endpoint di health check (senza auth, sempre 200)
+app.get('/healthz', (req, res) => {
+    res.status(200).send('OK');
+});
 
 // Route per il login
 app.post('/login', async (req, res) => {
