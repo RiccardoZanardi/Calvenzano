@@ -3351,10 +3351,34 @@ class FinanceApp {
             addText('2. Classifica per ammontare pagato (multe + offerte libere):', margin + 5, yPosition, { fontSize: 12, bold: true });
             yPosition += 10;
             
+            // Calculate external donations up to end date
+            let externalDonationsTotal = 0;
+            if (this.state.globalDonations) {
+                this.state.globalDonations.forEach(donation => {
+                    const donationDate = donation.date ? new Date(donation.date) : new Date(0);
+                    if (donationDate <= endDate && !donation.memberId) {
+                        externalDonationsTotal += donation.amount;
+                    }
+                });
+            }
+            
             const paidRanking = memberRankings
                 .filter(member => member.totalPaid > 0)
                 .sort((a, b) => b.totalPaid - a.totalPaid)
                 .slice(0, 10);
+            
+            // Add external donations to ranking if they exist
+            if (externalDonationsTotal > 0) {
+                paidRanking.push({
+                    name: 'Esterni alla squadra',
+                    totalPaid: externalDonationsTotal,
+                    finesPaid: 0,
+                    donations: externalDonationsTotal,
+                    isExternal: true
+                });
+                paidRanking.sort((a, b) => b.totalPaid - a.totalPaid);
+                paidRanking.splice(10); // Keep only top 10
+            }
             
             if (paidRanking.length === 0) {
                 addText('Nessun membro con pagamenti effettuati', margin + 10, yPosition, { fontSize: 10 });
@@ -3367,9 +3391,14 @@ class FinanceApp {
                         yPosition = 30;
                     }
                     
-                    const breakdown = member.donations > 0 ? 
-                        ` (${this.formatCurrency(member.finesPaid)} multe + ${this.formatCurrency(member.donations)} offerte)` : 
-                        ` (${this.formatCurrency(member.finesPaid)} multe)`;
+                    let breakdown;
+                    if (member.isExternal) {
+                        breakdown = ` (${this.formatCurrency(member.donations)} offerte)`;
+                    } else {
+                        breakdown = member.donations > 0 ? 
+                            ` (${this.formatCurrency(member.finesPaid)} multe + ${this.formatCurrency(member.donations)} offerte)` : 
+                            ` (${this.formatCurrency(member.finesPaid)} multe)`;
+                    }
                     
                     addText(`${index + 1}. ${member.name} - ${this.formatCurrency(member.totalPaid)}${breakdown}`, margin + 10, yPosition, { fontSize: 10 });
                     yPosition += 6;
@@ -3413,6 +3442,17 @@ class FinanceApp {
                 .filter(member => member.donations > 0)
                 .sort((a, b) => b.donations - a.donations)
                 .slice(0, 10);
+            
+            // Add external donations to ranking if they exist
+            if (externalDonationsTotal > 0) {
+                donationsRanking.push({
+                    name: 'Esterni alla squadra',
+                    donations: externalDonationsTotal,
+                    isExternal: true
+                });
+                donationsRanking.sort((a, b) => b.donations - a.donations);
+                donationsRanking.splice(10); // Keep only top 10
+            }
             
             if (donationsRanking.length === 0) {
                 addText('Nessun membro con offerte libere', margin + 10, yPosition, { fontSize: 10 });
@@ -3863,10 +3903,34 @@ class FinanceApp {
             addText('2. Classifica per ammontare pagato (multe + offerte libere):', margin + 5, yPosition, { fontSize: 12, bold: true });
             yPosition += 10;
             
+            // Calculate external donations up to end date
+            let externalDonationsTotalTemp = 0;
+            if (this.state.globalDonations) {
+                this.state.globalDonations.forEach(donation => {
+                    const donationDate = donation.date ? new Date(donation.date) : new Date(0);
+                    if (donationDate <= endDate && !donation.memberId) {
+                        externalDonationsTotalTemp += donation.amount;
+                    }
+                });
+            }
+            
             const paidRanking = memberRankings
                 .filter(member => member.totalPaid > 0)
                 .sort((a, b) => b.totalPaid - a.totalPaid)
                 .slice(0, 10);
+            
+            // Add external donations to ranking if they exist
+            if (externalDonationsTotalTemp > 0) {
+                paidRanking.push({
+                    name: 'Esterni alla squadra',
+                    totalPaid: externalDonationsTotalTemp,
+                    finesPaid: 0,
+                    donations: externalDonationsTotalTemp,
+                    isExternal: true
+                });
+                paidRanking.sort((a, b) => b.totalPaid - a.totalPaid);
+                paidRanking.splice(10); // Keep only top 10
+            }
             
             if (paidRanking.length === 0) {
                 addText('Nessun membro con pagamenti effettuati', margin + 10, yPosition, { fontSize: 10 });
@@ -3879,9 +3943,14 @@ class FinanceApp {
                         yPosition = 30;
                     }
                     
-                    const breakdown = member.donations > 0 ? 
-                        ` (${this.formatCurrency(member.finesPaid)} multe + ${this.formatCurrency(member.donations)} offerte)` : 
-                        ` (${this.formatCurrency(member.finesPaid)} multe)`;
+                    let breakdown;
+                    if (member.isExternal) {
+                        breakdown = ` (${this.formatCurrency(member.donations)} offerte)`;
+                    } else {
+                        breakdown = member.donations > 0 ? 
+                            ` (${this.formatCurrency(member.finesPaid)} multe + ${this.formatCurrency(member.donations)} offerte)` : 
+                            ` (${this.formatCurrency(member.finesPaid)} multe)`;
+                    }
                     
                     addText(`${index + 1}. ${member.name} - ${this.formatCurrency(member.totalPaid)}${breakdown}`, margin + 10, yPosition, { fontSize: 10 });
                     yPosition += 6;
@@ -3925,6 +3994,22 @@ class FinanceApp {
                 .filter(member => member.donations > 0)
                 .sort((a, b) => b.donations - a.donations)
                 .slice(0, 10);
+            
+            // Calculate external donations for the period
+            const externalDonationsTotalTempPDF = this.state.globalDonations
+                .filter(donation => !donation.memberId && new Date(donation.date) <= endDate)
+                .reduce((total, donation) => total + donation.amount, 0);
+            
+            // Add external donations to ranking if they exist
+            if (externalDonationsTotalTempPDF > 0) {
+                donationsRankingTempPDF.push({
+                    name: 'Esterni alla squadra',
+                    donations: externalDonationsTotalTempPDF,
+                    isExternal: true
+                });
+                donationsRankingTempPDF.sort((a, b) => b.donations - a.donations);
+                donationsRankingTempPDF.splice(10); // Keep only top 10
+            }
             
             if (donationsRankingTempPDF.length === 0) {
                 addText('Nessun membro con offerte libere', margin + 10, yPosition, { fontSize: 10 });
