@@ -10,6 +10,13 @@ const GitHubStorage = require('./github-storage');
 const app = express();
 const PORT = process.env.PORT || 3002;
 
+// Crea la cartella sessions se non esiste (risolve errore ENOENT su Render)
+const sessionsDir = path.join(__dirname, 'sessions');
+if (!fs.existsSync(sessionsDir)) {
+    fs.mkdirSync(sessionsDir, { recursive: true });
+    console.log('📁 Cartella sessions creata:', sessionsDir);
+}
+
 // Inizializza il sistema di storage persistente
 const storage = new GitHubStorage();
 console.log('📦 Storage system initialized:', storage.getStorageInfo());
