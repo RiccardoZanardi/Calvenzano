@@ -44,40 +44,76 @@ class FinanceApp {
 
     // Data Management
     async loadData() {
+        let backendData = null;
+        let localData = null;
+        
+        // Try to load from backend
         try {
-            // Detect if we're running on a server or as a static file
             const apiBaseUrl = this.getApiBaseUrl();
             if (apiBaseUrl) {
                 const response = await fetch(`${apiBaseUrl}/api/data`);
                 if (response.ok) {
-                    const backendData = await response.json();
+                    backendData = await response.json();
                     if (backendData && Object.keys(backendData).length > 0) {
-                        this.loadDataFromSource(backendData, 'backend');
-                        console.log('Dati caricati dal backend');
-                        return;
+                        console.log('Dati backend disponibili, timestamp:', backendData.lastUpdated);
+                    } else {
+                        backendData = null;
                     }
                 }
             }
         } catch (error) {
-            console.warn('Backend non disponibile, provo localStorage:', error.message);
+            console.warn('Backend non disponibile:', error.message);
         }
         
+        // Try to load from localStorage
         try {
-            // Fallback to localStorage
-            const localData = localStorage.getItem('financeAppData');
-            if (localData) {
-                const parsedData = JSON.parse(localData);
-                if (parsedData && Object.keys(parsedData).length > 0) {
-                    this.loadDataFromSource(parsedData, 'localStorage');
-                    console.log('Dati caricati da localStorage (fallback)');
-                    return;
+            const localDataString = localStorage.getItem('financeAppData');
+            if (localDataString) {
+                localData = JSON.parse(localDataString);
+                if (localData && Object.keys(localData).length > 0) {
+                    console.log('Dati localStorage disponibili, timestamp:', localData.lastUpdated);
+                } else {
+                    localData = null;
                 }
             }
         } catch (error) {
             console.error('Errore nel caricamento da localStorage:', error);
+            localData = null;
         }
         
-        console.log('Utilizzo dati di default');
+        // Decide which data to use based on timestamps and availability
+        if (backendData && localData) {
+            // Both sources available, compare timestamps
+            const backendTime = new Date(backendData.lastUpdated || 0).getTime();
+            const localTime = new Date(localData.lastUpdated || 0).getTime();
+            
+            if (backendTime >= localTime) {
+                this.loadDataFromSource(backendData, 'backend');
+                console.log('✅ Dati caricati dal backend (più recenti)');
+                // Update localStorage with backend data
+                localStorage.setItem('financeAppData', JSON.stringify(backendData));
+            } else {
+                this.loadDataFromSource(localData, 'localStorage');
+                console.log('✅ Dati caricati da localStorage (più recenti)');
+                // Sync localStorage data to backend
+                this.saveData();
+            }
+        } else if (backendData) {
+            // Only backend data available
+            this.loadDataFromSource(backendData, 'backend');
+            console.log('✅ Dati caricati dal backend (unica fonte)');
+            // Update localStorage with backend data
+            localStorage.setItem('financeAppData', JSON.stringify(backendData));
+        } else if (localData) {
+            // Only localStorage data available
+            this.loadDataFromSource(localData, 'localStorage');
+            console.log('✅ Dati caricati da localStorage (fallback)');
+            // Try to sync to backend
+            this.saveData();
+        } else {
+            // No data available, use defaults
+            console.log('⚠️ Utilizzo dati di default');
+        }
     }
     
     loadDataFromSource(savedData, source) {
@@ -3315,28 +3351,10 @@ class FinanceApp {
             addText('2. Classifica per ammontare pagato (multe + offerte libere):', margin + 5, yPosition, { fontSize: 12, bold: true });
             yPosition += 10;
             
-            // Calculate external donations
-            const externalDonations = this.globalDonations
-                .filter(donation => !donation.memberId)
-                .reduce((sum, donation) => sum + donation.amount, 0);
-            
-            // Create ranking including external donations
-            const paidRankingWithExternal = [...memberRankings
+            const paidRanking = memberRankings
                 .filter(member => member.totalPaid > 0)
-                .sort((a, b) => b.totalPaid - a.totalPaid)];
-            
-            // Add external donations if any
-            if (externalDonations > 0) {
-                paidRankingWithExternal.push({
-                    name: 'Esterni alla squadra',
-                    totalPaid: externalDonations,
-                    finesPaid: 0,
-                    donations: externalDonations
-                });
-                paidRankingWithExternal.sort((a, b) => b.totalPaid - a.totalPaid);
-            }
-            
-            const paidRanking = paidRankingWithExternal.slice(0, 10);
+                .sort((a, b) => b.totalPaid - a.totalPaid)
+                .slice(0, 10);
             
             if (paidRanking.length === 0) {
                 addText('Nessun membro con pagamenti effettuati', margin + 10, yPosition, { fontSize: 10 });
@@ -3344,7 +3362,7 @@ class FinanceApp {
             } else {
                 paidRanking.forEach((member, index) => {
                     // Check page break
-                    if (yPosition > 250) {
+                    if (yPosition > 245) {
                         doc.addPage();
                         yPosition = 30;
                     }
@@ -3391,21 +3409,10 @@ class FinanceApp {
             addText('4. Classifica per offerte libere:', margin + 5, yPosition, { fontSize: 12, bold: true });
             yPosition += 10;
             
-            // Create donations ranking including external donations
-            const donationsRankingWithExternal = [...memberRankings
+            const donationsRanking = memberRankings
                 .filter(member => member.donations > 0)
-                .sort((a, b) => b.donations - a.donations)];
-            
-            // Add external donations if any
-            if (externalDonations > 0) {
-                donationsRankingWithExternal.push({
-                    name: 'Esterni alla squadra',
-                    donations: externalDonations
-                });
-                donationsRankingWithExternal.sort((a, b) => b.donations - a.donations);
-            }
-            
-            const donationsRanking = donationsRankingWithExternal.slice(0, 10);
+                .sort((a, b) => b.donations - a.donations)
+                .slice(0, 10);
             
             if (donationsRanking.length === 0) {
                 addText('Nessun membro con offerte libere', margin + 10, yPosition, { fontSize: 10 });
@@ -3422,7 +3429,6 @@ class FinanceApp {
                     yPosition += 6;
                 });
             }
-
             
             yPosition += 10;
 
@@ -3915,21 +3921,10 @@ class FinanceApp {
             addText('4. Classifica per offerte libere:', margin + 5, yPosition, { fontSize: 12, bold: true });
             yPosition += 10;
             
-            // Create donations ranking including external donations
-            const donationsRankingWithExternal = [...memberRankings
+            const donationsRankingTempPDF = memberRankings
                 .filter(member => member.donations > 0)
-                .sort((a, b) => b.donations - a.donations)];
-            
-            // Add external donations if any
-            if (externalDonations > 0) {
-                donationsRankingWithExternal.push({
-                    name: 'Esterni alla squadra',
-                    donations: externalDonations
-                });
-                donationsRankingWithExternal.sort((a, b) => b.donations - a.donations);
-            }
-            
-            const donationsRankingTempPDF = donationsRankingWithExternal.slice(0, 10);
+                .sort((a, b) => b.donations - a.donations)
+                .slice(0, 10);
             
             if (donationsRankingTempPDF.length === 0) {
                 addText('Nessun membro con offerte libere', margin + 10, yPosition, { fontSize: 10 });
