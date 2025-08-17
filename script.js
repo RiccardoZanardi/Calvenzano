@@ -113,11 +113,11 @@ class FinanceApp {
 
     // Helper method to get API base URL
     getApiBaseUrl() {
-        // Check if we're running on localhost with a server
-        if (window.location.protocol === 'http:' && window.location.hostname === 'localhost') {
+        // Check if we have a proper hostname (not file:// protocol)
+        if (window.location.hostname && window.location.hostname !== '') {
             return window.location.origin;
         }
-        // For file:// protocol or other cases, no backend available
+        // For file:// protocol, no backend available
         return null;
     }
 
