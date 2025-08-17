@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Dati - Pulizia localStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .section-title {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        .data-content {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .btn-danger {
+            background: #dc3545;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗂️ Gestione Dati Applicazione</h1>
+        <p>Strumento per verificare e pulire i dati salvati nell'applicazione.</p>
+        
+        <div class="section">
+            <div class="section-title">Azioni</div>
+            <button onclick="checkLocalStorage()">📊 Verifica localStorage</button>
+            <button onclick="clearLocalStorage()" class="btn-danger">🗑️ Pulisci localStorage</button>
+            <button onclick="goToApp()">🚀 Vai all'App</button>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Stato localStorage</div>
+            <div id="localStorageStatus" class="data-content">Clicca "Verifica localStorage" per vedere i dati</div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Informazioni Sistema di Salvataggio</div>
+            <div class="data-content">
+Sistema di Persistenza Dati:
+✅ localStorage: Salvataggio automatico nel browser
+✅ Salvataggio automatico: Ogni modifica viene salvata immediatamente
+✅ Persistenza: I dati rimangono salvati anche dopo giorni/settimane
+✅ Backup: I dati sono sempre disponibili finché non si pulisce il browser
+
+Note:
+- I dati vengono salvati automaticamente ad ogni operazione
+- localStorage mantiene i dati indefinitamente
+- Solo la pulizia manuale del browser può eliminare i dati
+- Il sistema è completamente funzionale per uso a lungo termine
+            </div>
+        </div>
+        
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            setTimeout(() => {
+                statusDiv.textContent = '';
+                statusDiv.className = '';
+            }, 3000);
+        }
+        
+        function checkLocalStorage() {
+            const statusDiv = document.getElementById('localStorageStatus');
+            let content = 'Contenuto localStorage:\n\n';
+            
+            if (localStorage.length === 0) {
+                content += 'localStorage è vuoto - nessun dato salvato';
+            } else {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    const value = localStorage.getItem(key);
+                    
+                    if (key === 'financeAppData') {
+                        content += `🎯 DATI APPLICAZIONE (${key}):\n`;
+                        try {
+                            const parsedData = JSON.parse(value);
+                            content += `- Membri: ${parsedData.members ? parsedData.members.length : 0}\n`;
+                            content += `- Categorie: ${parsedData.categories ? Object.keys(parsedData.categories).length : 0}\n`;
+                            content += `- Attività: ${parsedData.activities ? parsedData.activities.length : 0}\n`;
+                            content += `- Eventi ICS: ${parsedData.icsEvents ? parsedData.icsEvents.length : 0}\n`;
+                            content += `- Donazioni globali: ${parsedData.globalDonations ? parsedData.globalDonations.length : 0}\n\n`;
+                            content += `Dati completi:\n${JSON.stringify(parsedData, null, 2)}\n\n`;
+                        } catch (e) {
+                            content += `Errore nel parsing: ${e.message}\n\n`;
+                        }
+                    } else {
+                        content += `${key}: ${value.substring(0, 100)}${value.length > 100 ? '...' : ''}\n\n`;
+                    }
+                }
+            }
+            
+            statusDiv.textContent = content;
+            console.log('localStorage check:', localStorage);
+        }
+        
+        function clearLocalStorage() {
+            if (confirm('⚠️ ATTENZIONE: Questa operazione eliminerà TUTTI i dati salvati nell\'applicazione.\n\nSei sicuro di voler procedere?')) {
+                try {
+                    // Rimuovi specificamente i dati dell'app
+                    localStorage.removeItem('financeAppData');
+                    
+                    console.log('Dati applicazione eliminati dal localStorage');
+                    showStatus('✅ Dati applicazione eliminati con successo!', 'success');
+                    checkLocalStorage();
+                } catch (error) {
+                    console.error('Errore nella pulizia:', error);
+                    showStatus('❌ Errore nella pulizia dei dati', 'error');
+                }
+            }
+        }
+        
+        function goToApp() {
+            window.location.href = '/index.html';
+        }
+        
+        // Carica automaticamente lo stato del localStorage all'avvio
+        window.onload = function() {
+            checkLocalStorage();
+        };
+    </script>
+</body>
+</html>

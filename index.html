@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcio Cash Flow - Manager Squadra</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
+    <!-- Main Application Container -->
+    <div id="appContainer">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>ASD Calvenzano</h2>
+        <p>Registrazione Multe</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" data-section="home" class="nav-link active">🏠 Home</a></li>
+                <li><a href="#" data-section="multe" class="nav-link">💰 Multe</a></li>
+                <li><a href="#" data-section="rosa" class="nav-link">👥 Rosa</a></li>
+                <li><a href="#" data-section="classifica" class="nav-link">🏆 Classifica</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="btn-logout" id="btnLogout">🚪 Logout</button>
+            </div>
+
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="home" class="section active">
+                <div class="section-header">
+                    <h1>Dashboard Squadra</h1>
+                    <div class="header-buttons">
+                        <button class="btn-pdf" id="btnReportPDF">Report PDF</button>
+                        <button class="btn-pdf-temp" id="btnReportTemp">Provvisorio</button>
+                    </div>
+                </div>
+
+                <!-- Total Cash Display -->
+                <div class="total-cash-card">
+                    <h2>TOTALE IN CASSA</h2>
+                    <div class="total-amount" id="totalCash">€83</div>
+                    <p>Ammontare totale di multe, ICS e offerte</p>
+                    <div class="total-breakdown">
+                        <div class="total-detail">
+                            <span class="total-versato" id="totalVersato">Versato: €0</span>
+                            <span class="total-da-versare" id="totalDaVersare">Da versare: €0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cash Breakdown -->
+                <div class="cash-breakdown">
+                    <div class="breakdown-card multe">
+                        <h3>Multe Assegnate</h3>
+                        <div class="amount" id="multeAmount">€50</div>
+                        <div class="details">
+                            <span class="versato">Versato: €40</span>
+                            <span class="da-versare">Da versare: €10</span>
+                        </div>
+                        <p><span id="unpaidFinesCount">0</span> persone con multe non saldate</p>
+                    </div>
+                    <div class="breakdown-card ics">
+                        <h3>ICS Partitelle</h3>
+                        <div class="amount" id="icsAmount">€3</div>
+                        <div class="details">
+                            <span class="versato-ics">Versato: €0</span>
+                            <span class="da-versare-ics">Da versare: €3</span>
+                        </div>
+                        <p>Infrasettimanali calcistiche sanzionabili</p>
+                    </div>
+                    <div class="breakdown-card offerte">
+                        <h3>Offerte Libere</h3>
+                        <div class="amount" id="offerteAmount">€30</div>
+                        <p>Donazioni volontarie</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="recent-activities-section">
+                    <h3>Ultime Attività</h3>
+                    <p>Movimenti recenti aggiornati in tempo reale</p>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-item">
+                            <div class="activity-icon">⚠️</div>
+                            <div class="activity-details">
+                                <div class="activity-name">Mario Rossi</div>
+                                <div class="activity-desc">Ritardo allenamento</div>
+                            </div>
+                            <div class="activity-amount">+€5</div>
+                            <div class="activity-date">15/01/2024</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">💰</div>
+                            <div class="activity-details">
+                                <div class="activity-name">Luca Bianchi</div>
+                                <div class="activity-desc">Pagamento multe</div>
+                            </div>
+                            <div class="activity-amount">Pagato €15</div>
+                            <div class="activity-date">14/01/2024</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">💜</div>
+                            <div class="activity-details">
+                                <div class="activity-name">Sistema</div>
+                                <div class="activity-desc">Offerta libera</div>
+                            </div>
+                            <div class="activity-amount">+€10</div>
+                            <div class="activity-date">10/01/2024</div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <!-- Multe Section -->
+            <section id="multe" class="section">
+                <div class="section-header">
+                    <h1>Gestione Multe</h1>
+                    <div class="header-buttons">
+                    <button class="btn-secondary" id="gestisciCategorie">Gestisci Categorie</button>
+                    <button id="restoreMulte" class="btn-red" style="display: none;">Ripristina</button>
+                    <button class="btn-red" id="eliminaMulte" title="Elimina tutte le multe assegnate e/o pagate">Elimina Multe</button>
+                </div>
+                </div>
+
+                <!-- Triple Choice Tabs -->
+                <div class="multe-tabs">
+                    <button class="multe-tab-btn active" data-multe-section="assegna">Assegna Multe</button>
+                    <button class="multe-tab-btn" data-multe-section="ics">ICS Partitelle</button>
+                    <button class="multe-tab-btn" data-multe-section="offerte">Offerte Libere</button>
+                </div>
+
+                <!-- Assegna Multe Section -->
+                <div id="assegnaSection" class="multe-content active">
+                    <div class="multe-grid">
+                    <!-- Assign Fine Form -->
+                    <div class="multe-card">
+                        <h3>💰 Assegna Multa</h3>
+                        <p>Seleziona categoria e membri</p>
+                        <form id="assignFineForm">
+                            <div class="form-group">
+                                <label>Macrocategoria</label>
+                                <select id="fineMacroCategory" required>
+                                    <option value="">Seleziona macrocategoria</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="microCategoryGroup" style="display: none;">
+                                <label>Categoria Multa</label>
+                                <select id="fineCategory" required>
+                                    <option value="">Seleziona microcategoria</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Seleziona Membri</label>
+                                <p class="selection-hint">Clicca sui membri per selezionarli (selezione multipla)</p>
+                                <div class="member-selection-grid" id="memberSelectionGrid">
+                                    <!-- Members will be populated dynamically -->
+                                </div>
+                                <div class="selection-summary" id="selectionSummary" style="display: none;">
+                                    <span class="selected-count" id="selectedMembersText">0 membri selezionati</span>
+                                    <button type="button" class="btn-clear-selection" id="clearSelection">Deseleziona Tutti</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Note (opzionale)</label>
+                                <textarea id="fineDescription" placeholder="Aggiungi note aggiuntive (es. ritardo di 15 minuti, dimenticanza scarpe)..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary">Assegna Multa</button>
+                        </form>
+                    </div>
+
+                    </div>
+                </div>
+
+                <!-- ICS Partitelle Section -->
+                <div id="icsSection" class="multe-content">
+                    <div class="multe-card">
+                        <h3>⚽ ICS Rapido</h3>
+                        <p>Assegna 1€ per partitella persa</p>
+                        <div class="ics-section">
+                            <p>Chi ha perso/saltato la partitella?</p>
+                            <div class="checkbox-group" id="icsCheckboxes">
+                                <label><input type="checkbox" value="mario"> Mario Rossi (Giocatore)</label>
+                                <label><input type="checkbox" value="luca"> Luca Bianchi (Giocatore)</label>
+                                <label><input type="checkbox" value="giuseppe"> Giuseppe Verdi (Staff)</label>
+                            </div>
+                            <p class="ics-note">Ogni membro selezionato riceverà una sanzione di €1</p>
+                            <button type="button" class="btn-primary" id="assignICS">Assegna ICS</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offerte Libere Section -->
+                <div id="offerteSection" class="multe-content">
+                    <div class="donations-section">
+                        <h3>Offerte Libere</h3>
+                        <p>Gestisci le donazioni volontarie al fondo squadra</p>
+                        <br>
+                        <div class="donation-form-container">
+                                <!-- Donor Type Selection -->
+                                <div class="donor-type-section">
+                                    <h4 class="section-title">Tipo Donatore</h4>
+                                    <div class="donor-type-options">
+                                        <label class="donor-option">
+                                            <input type="radio" name="donorType" value="external" checked>
+                                            <div class="option-content">
+                                                <span class="option-icon">👤</span>
+                                                <span class="option-text">Nome Libero</span>
+                                            </div>
+                                        </label>
+                                        <label class="donor-option">
+                                            <input type="radio" name="donorType" value="member">
+                                            <div class="option-content">
+                                                <span class="option-icon">⚽</span>
+                                                <span class="option-text">Membro Squadra</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Donor Input Section -->
+                                <div class="donor-input-section">
+                                    <div class="input-group" id="externalDonorGroup">
+                                        <label class="input-label">Nome Donatore</label>
+                                        <input type="text" id="donorName" class="form-input" placeholder="Inserisci il nome del donatore" required>
+                                    </div>
+                                    <div class="input-group" id="memberDonorGroup" style="display: none;">
+                                        <label class="input-label">Membro Squadra</label>
+                                        <select id="memberDonor" class="form-select" required>
+                                            <option value="">Seleziona un membro della squadra</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Amount Input Section -->
+                                <div class="amount-input-section">
+                                    <label class="input-label">Importo Donazione</label>
+                                    <div class="amount-input-wrapper">
+                                        <span class="currency-symbol">€</span>
+                                        <input type="number" id="donationAmount" class="form-input amount-input" placeholder="0.00" step="0.01" min="0" required>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="submit-section">
+                                    <button id="addDonationBtn" class="donation-submit-btn">
+                                        <span class="btn-icon">💰</span>
+                                        <span class="btn-text">Aggiungi Offerta</span>
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rosa Section -->
+            <section id="rosa" class="section">
+                <div class="section-header">
+                    <h1>Rosa Squadra</h1>
+                    <button id="addMemberBtn" class="btn btn-primary">Aggiungi Membro</button>
+                </div>
+
+                <!-- Double Choice Tabs -->
+                <div class="rosa-tabs">
+                    <button class="rosa-tab-btn active" data-rosa-section="staff">Staff</button>
+                    <button class="rosa-tab-btn" data-rosa-section="giocatori">Giocatori</button>
+                </div>
+
+                <!-- Staff Section -->
+                <div id="staffSection" class="rosa-content active">
+                    <div class="members-section">
+                        <h3>👥 Staff (<span id="staffCount">0</span>)</h3>
+                        <div class="members-list" id="staffList">
+                            <div class="member-card" data-member="giuseppe">
+                                <div class="member-info">
+                                    <div class="member-name">Giuseppe Verdi</div>
+                                    <div class="member-role">Staff</div>
+                                </div>
+                                <div class="member-stats">
+                                    <div class="stat">
+                                        <span class="label">Totale</span>
+                                        <span class="value">€10</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="label">Da versare</span>
+                                        <span class="value red">€5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Giocatori Section -->
+                <div id="giocatoriSection" class="rosa-content">
+                    <div class="members-section">
+                        <h3>⚽ Giocatori (<span id="playersCount">0</span>)</h3>
+                        <div class="members-list" id="playersList">
+                            <div class="member-card" data-member="mario">
+                                <div class="member-info">
+                                    <div class="member-name">Mario Rossi</div>
+                                    <div class="member-role">Giocatore</div>
+                                </div>
+                                <div class="member-stats">
+                                    <div class="stat">
+                                        <span class="label">Totale</span>
+                                        <span class="value">€25</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="label">Da versare</span>
+                                        <span class="value red">€5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="member-card" data-member="luca">
+                                <div class="member-info">
+                                    <div class="member-name">Luca Bianchi</div>
+                                    <div class="member-role">Giocatore</div>
+                                </div>
+                                <div class="member-stats">
+                                    <div class="stat">
+                                        <span class="label">Totale</span>
+                                        <span class="value">€15</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="label">Da versare</span>
+                                        <span class="value red">€0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Inactive Members Section -->
+                <div class="members-section inactive-section" id="inactiveMembersSection" style="display: none;">
+                    <h3>😴 Ex membri della rosa</h3>
+                    <p>Membri che non possono più ricevere multe ma mantengono le loro statistiche</p>
+                    <div class="members-list" id="inactiveMembersList">
+                        <!-- Inactive members will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Classifica Section -->
+            <section id="classifica" class="section">
+                <div class="section-header">
+                    <h1>Classifiche</h1>
+                </div>
+
+                <!-- Time Period Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-period="mensile">📅 Mensile</button>
+                    <button class="tab-btn" data-period="stagionale">📊 Stagionale</button>
+                </div>
+
+                <div class="classifica-grid">
+                    <!-- Top Contributors -->
+                    <div class="classifica-section">
+                        <h3>🏆 Top Pagatori (mensile)</h3>
+                        <p>Chi ha contribuito di più al fondo squadra (comprende multe pagate, ICS pagate e offerte libere effettuate)</p>
+                        <br>
+                        
+                        <!-- Fine Status Filter -->
+                        <div class="fine-status-tabs">
+                            <button class="status-tab-btn active" data-status="pagate">Pagate</button>
+                            <button class="status-tab-btn" data-status="assegnate">Assegnate</button>
+                        </div>
+                        <div class="ranking-grid">
+                            <div class="ranking-column">
+                                <!-- Populated dynamically by JavaScript -->
+                            </div>
+                            <div class="ranking-column">
+                                <!-- Populated dynamically by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sezione "Multe per Categoria" rimossa per semplificare l'interfaccia -->
+                    <!-- Le funzionalità delle categorie rimangono intatte per il resto dell'applicazione -->
+                </div>
+
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Member Modal -->
+        <div class="modal modal-overlay" id="addMemberModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Aggiungi Nuovo Membro</h3>
+                    <button id="closeAddMemberBtn" class="btn-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="memberName">Nome</label>
+                        <input type="text" id="memberName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberSurname">Cognome</label>
+                        <input type="text" id="memberSurname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberNickname">Soprannome (opzionale)</label>
+                        <input type="text" id="memberNickname" placeholder="Es. Il Capitano">
+                    </div>
+                    <div class="form-group">
+                        <label for="memberRole">Ruolo</label>
+                        <select id="memberRole">
+                            <option value="Giocatore">Giocatore</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
+                    <button id="submitAddMemberBtn" class="btn btn-primary">Aggiungi Membro</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Management Modal -->
+    <div class="modal modal-overlay" id="categoriesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Gestisci Categorie</h3>
+                <button class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="categoriesList">
+                    <!-- Categories will be populated by JavaScript -->
+                </div>
+                <div class="new-category-form">
+                    <h4>Aggiungi Nuova Categoria/Sottocategoria</h4>
+                    <div class="form-group">
+                        <label for="newCategoryType">Tipo</label>
+                        <select id="newCategoryType" onchange="toggleParentCategorySelect()">
+                            <option value="category">Macrocategoria (raggruppamento)</option>
+                            <option value="subcategory">Microcategoria (assegnabile)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="parentCategoryGroup" style="display: none;">
+                        <label for="newCategoryParent">Categoria Padre</label>
+                        <select id="newCategoryParent">
+                            <option value="">Seleziona categoria padre</option>
+                        </select>
+                    </div>
+                    <div class="form-row-inline">
+                        <div class="form-group">
+                            <label for="newCategoryName">Nome</label>
+                            <input type="text" id="newCategoryName" placeholder="Es. Giallo per proteste">
+                        </div>
+                        <div class="form-group" id="priceGroup">
+                            <label for="newCategoryPrice">Prezzo (€)</label>
+                            <input type="number" id="newCategoryPrice" placeholder="5" step="0.01" required>
+                        </div>
+                        <button class="btn-add-category">Aggiungi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification"></div>
+
+    <!-- jsPDF Library - File locale per evitare problemi di CDN -->
+    <script src="jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

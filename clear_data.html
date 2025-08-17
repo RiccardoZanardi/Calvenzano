@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulisci Dati</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #c82333;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .info {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pulisci Dati Applicazione</h1>
+        <div class="info">
+            <p><strong>Questo strumento eliminerà:</strong></p>
+            <ul>
+                <li>Tutti gli account utente registrati</li>
+                <li>Dati di sessione salvati</li>
+                <li>Log di sicurezza</li>
+                <li>Tentativi di login memorizzati</li>
+                <li>Tutti i dati dell'applicazione nel localStorage</li>
+            </ul>
+        </div>
+        
+        <button onclick="clearAllData()">Elimina Tutti i Dati</button>
+        <button onclick="clearUsersOnly()">Elimina Solo Utenti</button>
+        <button onclick="clearAndRedirect()">Elimina Tutto e Vai alla App</button>
+        <button onclick="showCurrentData()">Mostra Dati Attuali</button>
+        
+        <div id="result"></div>
+        <div id="dataDisplay"></div>
+    </div>
+
+    <script>
+        function clearAllData() {
+            // Elimina tutti i dati dal localStorage
+            localStorage.clear();
+            
+            // Forza anche la pulizia della cache del browser
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(function(name) {
+                        caches.delete(name);
+                    });
+                });
+            }
+            
+            document.getElementById('result').innerHTML = 
+                '<div class="success">✅ Tutti i dati sono stati eliminati dal localStorage e cache!</div>';
+        }
+        
+        function clearUsersOnly() {
+            // Elimina solo i dati degli utenti
+            localStorage.removeItem('financeApp_users');
+            localStorage.removeItem('authSession');
+            localStorage.removeItem('financeApp_securityLog');
+            localStorage.removeItem('loginAttempts');
+            
+            // Elimina anche eventuali dati specifici per team
+            const keys = Object.keys(localStorage);
+            keys.forEach(key => {
+                if (key.startsWith('financeAppData_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            
+            // Forza il reload della pagina principale dopo 2 secondi
+            document.getElementById('result').innerHTML = 
+                '<div class="success">✅ Dati utenti eliminati! Reindirizzamento alla pagina principale...</div>';
+            
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 2000);
+        }
+        
+        function showCurrentData() {
+            const users = localStorage.getItem('financeApp_users');
+            const session = localStorage.getItem('authSession');
+            const securityLog = localStorage.getItem('financeApp_securityLog');
+            const attempts = localStorage.getItem('loginAttempts');
+            
+            let html = '<div class="info"><h3>Dati Attuali nel localStorage:</h3>';
+            html += '<p><strong>Utenti:</strong> ' + (users ? 'Presenti' : 'Nessuno') + '</p>';
+            html += '<p><strong>Sessione attiva:</strong> ' + (session ? 'Sì' : 'No') + '</p>';
+            html += '<p><strong>Log sicurezza:</strong> ' + (securityLog ? 'Presente' : 'Nessuno') + '</p>';
+            html += '<p><strong>Tentativi login:</strong> ' + (attempts ? 'Presenti' : 'Nessuno') + '</p>';
+            
+            // Mostra anche le chiavi specifiche per team
+            const keys = Object.keys(localStorage);
+            const teamKeys = keys.filter(key => key.startsWith('financeAppData_'));
+            html += '<p><strong>Dati team:</strong> ' + (teamKeys.length > 0 ? teamKeys.join(', ') : 'Nessuno') + '</p>';
+            
+            html += '</div>';
+            
+            document.getElementById('dataDisplay').innerHTML = html;
+        }
+        
+        function clearAndRedirect() {
+            // Elimina tutti i dati
+            localStorage.clear();
+            
+            // Forza anche la pulizia della cache del browser
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(function(name) {
+                        caches.delete(name);
+                    });
+                });
+            }
+            
+            document.getElementById('result').innerHTML = 
+                '<div class="success">✅ Tutti i dati eliminati! Reindirizzamento...</div>';
+            
+            // Reindirizza immediatamente
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 1000);
+        }
+        
+        // Mostra i dati attuali al caricamento della pagina
+        window.onload = function() {
+            showCurrentData();
+        };
+    </script>
+</body>
+</html>

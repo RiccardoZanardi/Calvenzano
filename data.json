@@ -1,0 +1,426 @@
+{
+  "members": [
+    {
+      "id": "1754731427993",
+      "name": "Riccardo",
+      "surname": "Zanardi",
+      "nickname": "Zana",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-16",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "prova",
+          "amount": 6,
+          "date": "2025-08-16",
+          "paid": true,
+          "description": null
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-16",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "gnegne",
+          "amount": 2,
+          "date": "2025-08-16",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1754731555027",
+      "name": "Davide",
+      "surname": "Montagnari",
+      "nickname": "Monta",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "prova",
+          "amount": 5,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": null
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": true,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "prova",
+          "amount": 6,
+          "date": "2025-08-17",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1754741987535",
+      "name": "Mattia",
+      "surname": "Ciocca",
+      "nickname": "Ciockic",
+      "role": "Staff",
+      "active": true,
+      "fines": [
+        {
+          "category": "prova",
+          "amount": 6,
+          "date": "2025-08-16",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "prova",
+          "amount": 6,
+          "date": "2025-08-17",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1754757383198",
+      "name": "Paolo",
+      "surname": "Fanzaga",
+      "nickname": "Fanza",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-09",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "prova",
+          "amount": 6,
+          "date": "2025-08-16",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    }
+  ],
+  "categories": {
+    "inadempienze": {
+      "name": "Inadempienze",
+      "type": "category",
+      "parentCategory": null,
+      "active": true
+    },
+    "prova": {
+      "name": "Prova",
+      "type": "subcategory",
+      "parentCategory": "inadempienze",
+      "active": true,
+      "amount": 6,
+      "description": "€6 per prova"
+    },
+    "gnegne": {
+      "name": "Gnegne",
+      "type": "subcategory",
+      "parentCategory": "inadempienze",
+      "active": true,
+      "amount": 2,
+      "description": "€2 per gnegne"
+    }
+  },
+  "activities": [
+    {
+      "id": 1755424718679,
+      "description": "Multa assegnata: Mattia Ciocca - Prova",
+      "type": "fine",
+      "date": "2025-08-17T09:58:38.679Z",
+      "amount": 6
+    },
+    {
+      "id": 1755424718679,
+      "description": "Multa assegnata: Davide Montagnari - Prova",
+      "type": "fine",
+      "date": "2025-08-17T09:58:38.679Z",
+      "amount": 6
+    },
+    {
+      "id": 1755423187418,
+      "description": "Offerta libera ricevuta da Paolo \"Fanza\" Fanzaga",
+      "type": "donation",
+      "date": "2025-08-17T09:33:07.418Z",
+      "amount": 30
+    },
+    {
+      "id": 1755343879121,
+      "description": "Riccardo Zanardi - Pagamento multa undefined",
+      "type": "payment",
+      "date": "2025-08-16T11:31:19.121Z",
+      "amount": 1
+    },
+    {
+      "id": 1755343873017,
+      "description": "Multa assegnata: Riccardo Zanardi - Gnegne",
+      "type": "fine",
+      "date": "2025-08-16T11:31:13.017Z",
+      "amount": 2
+    },
+    {
+      "id": 1755343861950,
+      "description": "Riccardo Zanardi - Pagamento multa Prova",
+      "type": "payment",
+      "date": "2025-08-16T11:31:01.950Z",
+      "amount": 6
+    },
+    {
+      "id": 1755343512667,
+      "description": "Microcategoria \"Gnegne\" creata (€2) (sotto Inadempienze)",
+      "type": "category",
+      "date": "2025-08-16T11:25:12.667Z",
+      "amount": null
+    },
+    {
+      "id": 1755342456402,
+      "description": "Multa assegnata: Paolo Fanzaga - Prova",
+      "type": "fine",
+      "date": "2025-08-16T11:07:36.402Z",
+      "amount": 6
+    },
+    {
+      "id": 1755342456402,
+      "description": "Multa assegnata: Mattia Ciocca - Prova",
+      "type": "fine",
+      "date": "2025-08-16T11:07:36.402Z",
+      "amount": 6
+    },
+    {
+      "id": 1755342348864,
+      "description": "ICS assegnato: Riccardo Zanardi",
+      "type": "ics",
+      "date": "2025-08-16T11:05:48.864Z",
+      "amount": 1
+    }
+  ],
+  "icsEvents": [
+    {
+      "id": 1755342348857,
+      "date": "2025-08-16",
+      "participants": 1,
+      "members": [
+        "Riccardo Zanardi"
+      ]
+    },
+    {
+      "id": 1755340458785,
+      "date": "2025-08-16",
+      "participants": 1,
+      "members": [
+        "Riccardo Zanardi"
+      ]
+    },
+    {
+      "id": 1754757444895,
+      "date": "2025-08-09",
+      "participants": 2,
+      "members": [
+        "Riccardo Zanardi",
+        "Paolo Fanzaga"
+      ]
+    },
+    {
+      "id": 1754757339162,
+      "date": "2025-08-09",
+      "participants": 1,
+      "members": [
+        "Davide Montagnari"
+      ]
+    },
+    {
+      "id": 1754757277080,
+      "date": "2025-08-09",
+      "participants": 1,
+      "members": [
+        "Riccardo Zanardi"
+      ]
+    },
+    {
+      "id": 1754757166562,
+      "date": "2025-08-09",
+      "participants": 2,
+      "members": [
+        "Riccardo Zanardi",
+        "Davide Montagnari"
+      ]
+    },
+    {
+      "id": 1754757160918,
+      "date": "2025-08-09",
+      "participants": 1,
+      "members": [
+        "Davide Montagnari"
+      ]
+    },
+    {
+      "id": 1754756869234,
+      "date": "2025-08-09",
+      "participants": 1,
+      "members": [
+        "Riccardo Zanardi"
+      ]
+    },
+    {
+      "id": 1754737108203,
+      "date": "2025-08-09",
+      "participants": 1,
+      "members": [
+        "Riccardo Zanardi"
+      ]
+    },
+    {
+      "id": 1754736540599,
+      "date": "2025-08-09",
+      "participants": 2,
+      "members": [
+        "Riccardo Zanardi",
+        "Davide Montagnari"
+      ]
+    },
+    {
+      "id": 1754733550766,
+      "date": "2025-08-09",
+      "participants": 2,
+      "members": [
+        "Riccardo Zanardi",
+        "Davide Montagnari"
+      ]
+    }
+  ],
+  "notifications": [],
+  "globalDonations": [
+    {
+      "id": 1754758058246,
+      "donorName": "Davide \"Monta\" Montagnari",
+      "memberId": "1754731555027",
+      "amount": 0.13,
+      "date": "2025-08-09",
+      "note": "Offerta libera"
+    },
+    {
+      "id": 1754760460841,
+      "donorName": "Davide \"Monta\" Montagnari",
+      "memberId": "1754731555027",
+      "amount": 10,
+      "date": "2025-08-09",
+      "note": "Offerta libera"
+    },
+    {
+      "id": 1755340092205,
+      "donorName": "Blanca",
+      "memberId": null,
+      "amount": 2.5,
+      "date": "2025-08-16",
+      "note": "Offerta libera"
+    },
+    {
+      "id": 1755340452615,
+      "donorName": "Riccardo \"Zana\" Zanardi",
+      "memberId": "1754731427993",
+      "amount": 10,
+      "date": "2025-08-16",
+      "note": "Offerta libera"
+    },
+    {
+      "id": 1755423187418,
+      "donorName": "Paolo \"Fanza\" Fanzaga",
+      "memberId": "1754757383198",
+      "amount": 30,
+      "date": "2025-08-17",
+      "note": "Offerta libera"
+    }
+  ],
+  "lastUpdated": "2025-08-17T09:58:38.699Z"
+}
