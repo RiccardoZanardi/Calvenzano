@@ -46,8 +46,9 @@ Multe/
 
 ### API Endpoints
 
-- **GET /api/data** - Recupera tutti i dati
-- **POST /api/data** - Salva tutti i dati
+- **GET /api/data** - Recupera tutti i dati (ora con storage persistente)
+- **POST /api/data** - Salva tutti i dati (ora con storage persistente)
+- **GET /api/storage-info** - Informazioni sul sistema di storage
 - **GET /api/members** - Recupera solo i membri
 - **GET /api/fines** - Recupera solo le multe
 - **GET /api/categories** - Recupera solo le categorie
@@ -56,9 +57,35 @@ Multe/
 
 ### Persistenza Dati
 
-- I dati vengono salvati automaticamente in `data.json`
-- Backup automatico con timestamp
-- Fallback a localStorage in caso di errori del server
+**🔄 Sistema di Storage Ibrido (Locale + GitHub)**
+
+L'applicazione ora supporta due modalità di persistenza:
+
+1. **Storage Locale** (default):
+   - I dati vengono salvati in `data.json` locale
+   - Funziona sempre, anche senza configurazione aggiuntiva
+   - ⚠️ **Limitazione su Render**: I file locali si perdono al riavvio/cold start
+
+2. **Storage GitHub** (raccomandato per produzione):
+   - I dati vengono salvati in un repository GitHub
+   - **Persistenza garantita** anche su hosting gratuiti come Render
+   - Backup automatico con versioning Git
+   - Fallback automatico al file locale se GitHub non è disponibile
+
+**Configurazione Storage GitHub:**
+
+1. Crea un repository GitHub (può essere privato)
+2. Genera un Personal Access Token: https://github.com/settings/tokens
+3. Configura le variabili d'ambiente (vedi `.env.example`)
+4. L'app salverà automaticamente su GitHub + file locale
+
+**Variabili d'ambiente richieste:**
+```bash
+GITHUB_OWNER=your_username
+GITHUB_REPO=your_repo_name
+GITHUB_TOKEN=your_personal_access_token
+GITHUB_BRANCH=main  # opzionale
+```
 
 ## 🛠️ Sviluppo
 
@@ -115,9 +142,15 @@ Il file `data.json` contiene:
 
 ## 🚀 Deployment
 
-### GitHub Hosting
+### Deployment su Render (Raccomandato)
 
-1. **Preparazione Repository:**
+**🎯 Soluzione per il Piano Gratuito di Render**
+
+Render ha un filesystem effimero: i file locali si perdono al riavvio. La soluzione implementata usa GitHub come storage persistente.
+
+**Passi per il deployment:**
+
+1. **Preparazione Repository Codice:**
    ```bash
    git init
    git add .
@@ -127,25 +160,62 @@ Il file `data.json` contiene:
    git push -u origin main
    ```
 
-2. **Deployment su Servizi Cloud:**
-   - **Heroku:** Supporto nativo Node.js
-   - **Vercel:** Deployment automatico da GitHub
-   - **Railway:** Semplice deployment con database
-   - **Render:** Hosting gratuito con SSL
-
-3. **Variabili d'Ambiente:**
+2. **Creazione Repository Dati (separato):**
    ```bash
-   PORT=3001
-   NODE_ENV=production
+   # Crea un nuovo repository su GitHub per i dati
+   # Esempio: multe-data (può essere privato)
    ```
+
+3. **Configurazione Render:**
+   - Connetti il repository del codice
+   - Aggiungi le variabili d'ambiente:
+     ```bash
+     NODE_ENV=production
+     PORT=10000
+     PASSWORD_HASH=your_bcrypt_hash
+     SESSION_SECRET=your_session_secret
+     GITHUB_OWNER=your_username
+     GITHUB_REPO=multe-data
+     GITHUB_TOKEN=your_personal_access_token
+     GITHUB_BRANCH=main
+     ```
+
+4. **Generazione Personal Access Token:**
+   - Vai su: https://github.com/settings/tokens
+   - Crea un token con permessi `repo` (per repository privati)
+   - Copia il token nelle variabili d'ambiente di Render
+
+### Altri Servizi Cloud
+
+- **Heroku:** Supporto nativo Node.js + GitHub storage
+- **Railway:** Deployment semplice + GitHub storage
+- **Vercel:** Deployment automatico + GitHub storage
+
+### Variabili d'Ambiente Complete
+
+```bash
+# Essenziali
+NODE_ENV=production
+PORT=10000
+PASSWORD_HASH=your_bcrypt_password_hash
+SESSION_SECRET=your_session_secret
+
+# GitHub Storage (per persistenza)
+GITHUB_OWNER=your_github_username
+GITHUB_REPO=your_data_repository
+GITHUB_TOKEN=your_personal_access_token
+GITHUB_BRANCH=main
+```
 
 ### Note Importanti per il Deployment
 
-- Il file `data.json` non è incluso nel repository (vedi `.gitignore`)
-- Per produzione, considera l'uso di un database (MongoDB, PostgreSQL)
-- Configura le variabili d'ambiente per la sicurezza
-- Le modifiche locali NON si aggiornano automaticamente online
-- Usa `git push` per aggiornare l'applicazione pubblicata
+- ✅ **Persistenza garantita** con GitHub storage
+- ✅ **Piano gratuito compatibile** - nessun database esterno richiesto
+- ✅ **Backup automatico** tramite versioning Git
+- ✅ **Fallback locale** se GitHub non è disponibile
+- ⚠️ **Sicurezza**: Usa repository privati per dati sensibili
+- 🔄 **Aggiornamenti**: `git push` per aggiornare il codice
+- 📊 **Monitoraggio**: Usa `/api/storage-info` per verificare lo stato
 
 ## 📝 Note
 

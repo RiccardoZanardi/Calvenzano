@@ -4,9 +4,14 @@ const session = require('express-session');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
+const GitHubStorage = require('./github-storage');
 
 const app = express();
 const PORT = process.env.PORT || 3002;
+
+// Inizializza il sistema di storage persistente
+const storage = new GitHubStorage();
+console.log('📦 Storage system initialized:', storage.getStorageInfo());
 
 // Abilita trust proxy in produzione (necessario per cookie 'secure' e rilevare HTTPS dietro proxy)
 if (process.env.NODE_ENV === 'production') {
@@ -117,32 +122,53 @@ app.get('/auth-status', (req, res) => {
     });
 });
 
-// Route per l'API dei dati (mantiene compatibilità con il frontend esistente)
-app.get('/api/data', (req, res) => {
+// Route per l'API dei dati (ora con storage persistente GitHub)
+app.get('/api/data', async (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'data.json');
-        if (fs.existsSync(dataPath)) {
-            const data = fs.readFileSync(dataPath, 'utf8');
-            res.json(JSON.parse(data));
-        } else {
-            res.json({ members: [], categories: {}, activities: [] });
-        }
+        const data = await storage.readData();
+        // Aggiungi timestamp di ultima lettura per debugging
+        data.lastRead = new Date().toISOString();
+        res.json(data);
     } catch (error) {
         console.error('Errore lettura dati:', error);
         res.status(500).json({ error: 'Errore lettura dati' });
     }
 });
 
-// Route per salvare i dati
-app.post('/api/data', (req, res) => {
+// Route per salvare i dati (ora con storage persistente GitHub)
+app.post('/api/data', async (req, res) => {
     try {
-        const dataPath = path.join(__dirname, 'data.json');
-        fs.writeFileSync(dataPath, JSON.stringify(req.body, null, 2));
-        res.json({ success: true });
+        // Aggiungi timestamp di ultimo aggiornamento
+        const dataToSave = {
+            ...req.body,
+            lastUpdated: new Date().toISOString()
+        };
+        
+        const success = await storage.writeData(dataToSave);
+        
+        if (success || !storage.isGitHubConfigured()) {
+            res.json({ 
+                success: true, 
+                savedToGitHub: success && storage.isGitHubConfigured(),
+                savedLocally: true
+            });
+        } else {
+            res.json({ 
+                success: true, 
+                savedToGitHub: false,
+                savedLocally: true,
+                warning: 'Dati salvati solo localmente - GitHub non disponibile'
+            });
+        }
     } catch (error) {
         console.error('Errore salvataggio dati:', error);
         res.status(500).json({ error: 'Errore salvataggio dati' });
     }
+});
+
+// Route per informazioni sullo storage (utile per debugging)
+app.get('/api/storage-info', (req, res) => {
+    res.json(storage.getStorageInfo());
 });
 
 // Redirect della root alla dashboard se autenticato, altrimenti al login
