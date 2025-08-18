@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
-const FileStore = require('session-file-store')(session);
+const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
@@ -10,11 +10,19 @@ const GitHubStorage = require('./github-storage');
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-// Crea la cartella sessions se non esiste (risolve errore ENOENT su Render)
-const sessionsDir = path.join(__dirname, 'sessions');
-if (!fs.existsSync(sessionsDir)) {
-    fs.mkdirSync(sessionsDir, { recursive: true });
-    console.log('📁 Cartella sessions creata:', sessionsDir);
+// Configurazione session store per produzione e sviluppo
+let sessionStore;
+if (process.env.NODE_ENV === 'production' && process.env.MONGODB_URI) {
+    // Usa MongoDB in produzione se disponibile
+    sessionStore = MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        touchAfter: 24 * 3600 // lazy session update
+    });
+    console.log('📦 Using MongoDB session store for production');
+} else {
+    // Usa MemoryStore per sviluppo locale (più stabile)
+    sessionStore = new session.MemoryStore();
+    console.log('📦 Using MemoryStore for development');
 }
 
 // Inizializza il sistema di storage persistente
@@ -30,39 +38,29 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware per gestire errori di sessione e ricreare cartella se necessario
+// Middleware per gestione errori di sessione
 app.use((req, res, next) => {
-    const originalSend = res.send;
-    res.send = function(data) {
-        // Intercetta errori di sessione e ricrea cartella se necessario
-        if (typeof data === 'string' && data.includes('ENOENT') && data.includes('sessions')) {
-            console.log('🔧 Rilevato errore sessione, ricreando cartella...');
-            if (!fs.existsSync(sessionsDir)) {
-                fs.mkdirSync(sessionsDir, { recursive: true });
-                console.log('📁 Cartella sessions ricreata:', sessionsDir);
-            }
-        }
-        return originalSend.call(this, data);
-    };
+    // Gestione errori di sessione più robusta
+    if (req.session && typeof req.session.save === 'function') {
+        const originalSave = req.session.save;
+        req.session.save = function(callback) {
+            originalSave.call(this, (err) => {
+                if (err) {
+                    console.warn('⚠️ Session save error (continuing):', err.message);
+                    // Continua senza errore per non bloccare l'app
+                    if (callback) callback();
+                } else {
+                    if (callback) callback();
+                }
+            });
+        };
+    }
     next();
 });
 
 // Configurazione sessioni con FileStore (risolve problemi MemoryStore su Render)
 app.use(session({
-    store: new FileStore({
-        path: path.join(__dirname, 'sessions'),
-        encrypt: true,
-        secret: process.env.SESSION_SECRET || 'fallback-secret-key',
-        ttl: 86400, // 24 ore in secondi
-        retries: 3, // Numero di tentativi in caso di errore
-        reapInterval: 3600, // Pulizia sessioni scadute ogni ora
-        logFn: function(message) {
-            // Log personalizzato per debug su Render
-            if (message.includes('ENOENT')) {
-                console.warn('⚠️ Session file error (will retry):', message);
-            }
-        }
-    }),
+    store: sessionStore,
     secret: process.env.SESSION_SECRET || 'fallback-secret-key',
     resave: false,
     saveUninitialized: false,
