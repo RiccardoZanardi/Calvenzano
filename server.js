@@ -30,13 +30,38 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware per gestire errori di sessione e ricreare cartella se necessario
+app.use((req, res, next) => {
+    const originalSend = res.send;
+    res.send = function(data) {
+        // Intercetta errori di sessione e ricrea cartella se necessario
+        if (typeof data === 'string' && data.includes('ENOENT') && data.includes('sessions')) {
+            console.log('🔧 Rilevato errore sessione, ricreando cartella...');
+            if (!fs.existsSync(sessionsDir)) {
+                fs.mkdirSync(sessionsDir, { recursive: true });
+                console.log('📁 Cartella sessions ricreata:', sessionsDir);
+            }
+        }
+        return originalSend.call(this, data);
+    };
+    next();
+});
+
 // Configurazione sessioni con FileStore (risolve problemi MemoryStore su Render)
 app.use(session({
     store: new FileStore({
         path: path.join(__dirname, 'sessions'),
         encrypt: true,
         secret: process.env.SESSION_SECRET || 'fallback-secret-key',
-        ttl: 86400 // 24 ore in secondi
+        ttl: 86400, // 24 ore in secondi
+        retries: 3, // Numero di tentativi in caso di errore
+        reapInterval: 3600, // Pulizia sessioni scadute ogni ora
+        logFn: function(message) {
+            // Log personalizzato per debug su Render
+            if (message.includes('ENOENT')) {
+                console.warn('⚠️ Session file error (will retry):', message);
+            }
+        }
     }),
     secret: process.env.SESSION_SECRET || 'fallback-secret-key',
     resave: false,
