@@ -51,7 +51,9 @@ class FinanceApp {
         try {
             const apiBaseUrl = this.getApiBaseUrl();
             if (apiBaseUrl) {
-                const response = await fetch(`${apiBaseUrl}/api/data`);
+                const response = await fetch(`${apiBaseUrl}/api/data`, {
+                    credentials: 'include'
+                });
                 if (response.ok) {
                     backendData = await response.json();
                     if (backendData && Object.keys(backendData).length > 0) {
@@ -165,6 +167,7 @@ class FinanceApp {
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify(this.state)
                 });
                 
@@ -328,7 +331,8 @@ class FinanceApp {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
-                            }
+                            },
+                            credentials: 'include'
                         });
                         
                         const result = await response.json();
@@ -605,6 +609,12 @@ class FinanceApp {
                 case 'closeAddMemberModal':
                     this.closeAddMemberModal();
                     break;
+                case 'closeEditMemberModal':
+                    this.closeEditMemberModal();
+                    break;
+                case 'saveMemberChanges':
+                    this.saveMemberChanges();
+                    break;
 
                 // Member actions
                 case 'submitAddMember':
@@ -654,6 +664,11 @@ class FinanceApp {
                 case 'deleteFine':
                     if (params.memberId && params.fineIndex !== undefined) {
                         this.deleteFine(params.memberId, params.fineIndex);
+                    }
+                    break;
+                case 'editMember':
+                    if (params.memberId) {
+                        this.openEditMemberModal(params.memberId);
                     }
                     break;
                 case 'togglePaidFines':
@@ -1074,6 +1089,104 @@ class FinanceApp {
     closeAddMemberModal() {
         const modal = document.getElementById('addMemberModal');
         this.closeModal(modal);
+    }
+
+    // Open Edit Member Modal
+    openEditMemberModal(memberId) {
+        const member = this.state.members.find(m => m.id === memberId);
+        if (!member) {
+            this.showNotification('Membro non trovato', 'error');
+            return;
+        }
+
+        const modal = document.getElementById('editMemberModal');
+        modal.classList.add('active');
+        
+        // Populate form with current member data
+        document.getElementById('editMemberName').value = member.name || '';
+        document.getElementById('editMemberSurname').value = member.surname || '';
+        document.getElementById('editMemberNickname').value = member.nickname || '';
+        
+        // Store member ID for later use
+        modal.dataset.memberId = memberId;
+    }
+
+    // Close Edit Member Modal
+    closeEditMemberModal() {
+        const modal = document.getElementById('editMemberModal');
+        this.closeModal(modal);
+    }
+
+    // Save Member Changes
+    async saveMemberChanges() {
+        const modal = document.getElementById('editMemberModal');
+        const memberId = modal.dataset.memberId;
+        
+        if (!memberId) {
+            this.showNotification('Errore: ID membro non trovato', 'error');
+            return;
+        }
+
+        const member = this.state.members.find(m => m.id === memberId);
+        if (!member) {
+            this.showNotification('Membro non trovato', 'error');
+            return;
+        }
+
+        const newName = document.getElementById('editMemberName').value.trim();
+        const newSurname = document.getElementById('editMemberSurname').value.trim();
+        const newNickname = document.getElementById('editMemberNickname').value.trim();
+
+        if (!newName || !newSurname) {
+            this.showNotification('Nome e cognome sono obbligatori', 'error');
+            return;
+        }
+
+        // Store old values for activity log
+        const oldDisplayName = member.nickname || `${member.name} ${member.surname}`;
+        
+        try {
+            // Call the server API to update member
+            const response = await fetch(`/api/members/${memberId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    name: newName,
+                    surname: newSurname,
+                    nickname: newNickname || null
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Errore durante l\'aggiornamento');
+            }
+
+            // Update local state with the response data
+            member.name = result.member.name;
+            member.surname = result.member.surname;
+            member.nickname = result.member.nickname;
+            
+            const newDisplayName = member.nickname || `${member.name} ${member.surname}`;
+            
+            // Add activity log
+            this.addActivity(`Membro modificato: ${oldDisplayName} → ${newDisplayName}`, 'member', new Date());
+            
+            // Update UI
+            this.updateAllSections();
+            this.showNotification('Dati membro aggiornati con successo!', 'success');
+            
+            // Close modal
+            this.closeEditMemberModal();
+            
+        } catch (error) {
+            console.error('Error updating member:', error);
+            this.showNotification(`Errore: ${error.message}`, 'error');
+        }
     }
 
     // Member Management
@@ -2205,9 +2318,16 @@ class FinanceApp {
         
         return `
             <div class="member-card${inactiveClass}" data-member="${member.id}">
-                <div class="member-info">
-                    <div class="member-name">${displayName}${inactiveLabel}</div>
-                    <div class="member-role">${member.role}</div>
+                <div class="member-header">
+                    <div class="member-info">
+                        <div class="member-name">${displayName}${inactiveLabel}</div>
+                        <div class="member-role">${member.role}</div>
+                    </div>
+                    <div class="member-actions-header">
+                        <button class="btn-edit-member" data-action="editMember" data-params='{"memberId":"${member.id}"}' title="Modifica dati membro">
+                            ✏️
+                        </button>
+                    </div>
                 </div>
                 <div class="member-stats">
                     <div class="stat">
@@ -2635,7 +2755,8 @@ class FinanceApp {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
 
             if (!response.ok) {
@@ -4825,6 +4946,29 @@ notificationStyles.textContent = `
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .member-actions-header {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .btn-edit-member {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+        opacity: 0.7;
+    }
+    
+    .btn-edit-member:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        opacity: 1;
     }
     
     .member-expand-icon {

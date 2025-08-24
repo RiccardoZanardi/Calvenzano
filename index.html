@@ -480,6 +480,34 @@
         </div>
     </div>
 
+    <!-- Edit Member Modal -->
+    <div class="modal modal-overlay" id="editMemberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Modifica Membro</h3>
+                <button class="btn-close" data-action="closeEditMemberModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="editMemberName">Nome</label>
+                    <input type="text" id="editMemberName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editMemberSurname">Cognome</label>
+                    <input type="text" id="editMemberSurname" required>
+                </div>
+                <div class="form-group">
+                    <label for="editMemberNickname">Soprannome (opzionale)</label>
+                    <input type="text" id="editMemberNickname" placeholder="Es. Il Capitano">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" data-action="closeEditMemberModal">Annulla</button>
+                    <button class="btn btn-primary" data-action="saveMemberChanges">Salva Modifiche</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Notification Container -->
     <div id="notification" class="notification"></div>
 

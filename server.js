@@ -84,6 +84,14 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+// Middleware per autenticazione API
+function requireAuth(req, res, next) {
+    if (!req.session.authenticated) {
+        return res.status(401).json({ error: 'Non autenticato' });
+    }
+    next();
+}
+
 // Middleware per servire file statici solo se autenticato
 app.use((req, res, next) => {
     // Permetti accesso a login.html e risorse di login senza autenticazione
@@ -160,7 +168,7 @@ app.get('/auth-status', (req, res) => {
 });
 
 // Route per l'API dei dati (ora con storage persistente GitHub)
-app.get('/api/data', async (req, res) => {
+app.get('/api/data', requireAuth, async (req, res) => {
     try {
         const data = await storage.readData();
         // Aggiungi timestamp di ultima lettura per debugging
@@ -173,7 +181,7 @@ app.get('/api/data', async (req, res) => {
 });
 
 // Route per salvare i dati (ora con storage persistente GitHub)
-app.post('/api/data', async (req, res) => {
+app.post('/api/data', requireAuth, async (req, res) => {
     try {
         // Aggiungi timestamp di ultimo aggiornamento
         const dataToSave = {
@@ -204,7 +212,7 @@ app.post('/api/data', async (req, res) => {
 });
 
 // Route per eliminare una multa specifica
-app.delete('/api/fines/:memberId/:fineIndex', async (req, res) => {
+app.delete('/api/fines/:memberId/:fineIndex', requireAuth, async (req, res) => {
     try {
         const { memberId, fineIndex } = req.params;
         const data = await storage.readData();
@@ -244,8 +252,98 @@ app.delete('/api/fines/:memberId/:fineIndex', async (req, res) => {
     }
 });
 
+// Route per aggiornare i dati di un membro
+app.put('/api/members/:memberId', requireAuth, async (req, res) => {
+    try {
+        const { memberId } = req.params;
+        const { name, surname, nickname } = req.body;
+        
+        // Validazione campi richiesti
+        if (!memberId || !name || !surname) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'ID membro, nome e cognome sono richiesti' 
+            });
+        }
+        
+        // Validazione lunghezza input
+        if (name.length > 50 || surname.length > 50 || (nickname && nickname.length > 50)) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Nome, cognome e soprannome devono essere di massimo 50 caratteri' 
+            });
+        }
+        
+        const data = await storage.readData();
+        
+        // Trova il membro
+        const member = data.members.find(m => m.id === memberId);
+        if (!member) {
+            return res.status(404).json({ 
+                success: false, 
+                error: 'Membro non trovato' 
+            });
+        }
+        
+        // Controlla se esiste già un altro membro con questa combinazione nome/cognome
+        const existingMember = data.members.find(m => 
+            m.id !== memberId &&
+            m.name.toLowerCase() === name.toLowerCase() && 
+            m.surname.toLowerCase() === surname.toLowerCase()
+        );
+        
+        if (existingMember) {
+            return res.status(409).json({ 
+                success: false, 
+                error: 'Esiste già un membro con questo nome e cognome' 
+            });
+        }
+        
+        // Memorizza i vecchi valori per il log
+        const oldDisplayName = member.nickname || `${member.name} ${member.surname}`;
+        
+        // Aggiorna i dati del membro
+        member.name = name.trim();
+        member.surname = surname.trim();
+        member.nickname = nickname ? nickname.trim() : null;
+        
+        const newDisplayName = member.nickname || `${member.name} ${member.surname}`;
+        
+        // Salva i dati aggiornati
+        const dataToSave = {
+            ...data,
+            lastUpdated: new Date().toISOString()
+        };
+        
+        const success = await storage.writeData(dataToSave);
+        
+        console.log(`✅ Membro aggiornato: ${oldDisplayName} → ${newDisplayName}`);
+        
+        res.json({ 
+            success: true, 
+            message: 'Membro aggiornato con successo',
+            member: {
+                id: member.id,
+                name: member.name,
+                surname: member.surname,
+                nickname: member.nickname,
+                role: member.role
+            },
+            savedToGitHub: success && storage.isGitHubConfigured(),
+            savedLocally: true
+        });
+        
+    } catch (error) {
+        console.error('Errore aggiornamento membro:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Errore interno del server' 
+        });
+    }
+});
+
 // Route per informazioni sullo storage (utile per debugging)
-app.get('/api/storage-info', (req, res) => {
+app.get('/api/storage-info', requireAuth, (req, res) => {
     res.json(storage.getStorageInfo());
 });
 
