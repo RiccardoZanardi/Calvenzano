@@ -203,6 +203,47 @@ app.post('/api/data', async (req, res) => {
     }
 });
 
+// Route per eliminare una multa specifica
+app.delete('/api/fines/:memberId/:fineIndex', async (req, res) => {
+    try {
+        const { memberId, fineIndex } = req.params;
+        const data = await storage.readData();
+        
+        // Trova il membro
+        const member = data.members.find(m => m.id === memberId);
+        if (!member) {
+            return res.status(404).json({ error: 'Membro non trovato' });
+        }
+        
+        // Verifica che l'indice della multa sia valido
+        const fineIndexNum = parseInt(fineIndex);
+        if (fineIndexNum < 0 || fineIndexNum >= member.fines.length) {
+            return res.status(404).json({ error: 'Multa non trovata' });
+        }
+        
+        // Rimuovi la multa
+        const deletedFine = member.fines.splice(fineIndexNum, 1)[0];
+        
+        // Salva i dati aggiornati
+        const dataToSave = {
+            ...data,
+            lastUpdated: new Date().toISOString()
+        };
+        
+        const success = await storage.writeData(dataToSave);
+        
+        res.json({ 
+            success: true,
+            deletedFine,
+            savedToGitHub: success && storage.isGitHubConfigured(),
+            savedLocally: true
+        });
+    } catch (error) {
+        console.error('Errore eliminazione multa:', error);
+        res.status(500).json({ error: 'Errore eliminazione multa' });
+    }
+});
+
 // Route per informazioni sullo storage (utile per debugging)
 app.get('/api/storage-info', (req, res) => {
     res.json(storage.getStorageInfo());

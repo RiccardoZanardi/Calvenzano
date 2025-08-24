@@ -651,6 +651,11 @@ class FinanceApp {
                         this.toggleFinePayment(params.memberId, params.fineIndex);
                     }
                     break;
+                case 'deleteFine':
+                    if (params.memberId && params.fineIndex !== undefined) {
+                        this.deleteFine(params.memberId, params.fineIndex);
+                    }
+                    break;
                 case 'togglePaidFines':
                     if (params.memberId) {
                         console.log('🔍 [DEBUG] Chiamata togglePaidFines con memberId:', params.memberId);
@@ -2464,10 +2469,16 @@ class FinanceApp {
                 <div class="fine-amount">
                     €${fine.amount}
                 </div>
-                <button class="btn-pay" 
-                        data-action="toggleFinePayment" data-params='{"memberId":"${memberId}","fineIndex":${fine.originalIndex}}'>
-                    Paga
-                </button>
+                <div class="fine-actions">
+                    <button class="btn-pay" 
+                            data-action="toggleFinePayment" data-params='{"memberId":"${memberId}","fineIndex":${fine.originalIndex}}'>
+                        Paga
+                    </button>
+                    <button class="btn-delete-fine" 
+                            data-action="deleteFine" data-params='{"memberId":"${memberId}","fineIndex":${fine.originalIndex}}'>
+                        Elimina
+                    </button>
+                </div>
             </div>
         `).join('');
         
@@ -2480,9 +2491,15 @@ class FinanceApp {
                 <div class="fine-amount paid">
                     €${fine.amount}
                 </div>
-                <button class="btn-pay" disabled>
-                    Pagata
-                </button>
+                <div class="fine-actions">
+                    <button class="btn-pay" disabled>
+                        Pagata
+                    </button>
+                    <button class="btn-delete-fine" 
+                            data-action="deleteFine" data-params='{"memberId":"${memberId}","fineIndex":${fine.originalIndex}}'>
+                        Elimina
+                    </button>
+                </div>
             </div>
         `).join('');
         
@@ -2598,6 +2615,60 @@ class FinanceApp {
             `${action} di €${fine.amount} per ${member.name} ${member.surname}`, 
             'success'
         );
+    }
+
+    // Delete Fine
+    async deleteFine(memberId, fineIndex) {
+        const member = this.state.members.find(m => m.id === memberId);
+        if (!member || !member.fines[fineIndex]) return;
+
+        const fine = member.fines[fineIndex];
+        const categoryName = this.state.categories[fine.category]?.name || fine.category || 'Categoria sconosciuta';
+        
+        if (!confirm(`Sei sicuro di voler eliminare la multa "${categoryName}" di €${fine.amount} per ${member.name} ${member.surname}?`)) {
+            return;
+        }
+
+        try {
+            // Call the backend API to delete the fine
+            const response = await fetch(`/api/fines/${memberId}/${fineIndex}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Errore durante l\'eliminazione della multa');
+            }
+
+            const result = await response.json();
+            
+            if (result.success) {
+                // Update local state
+                member.fines.splice(fineIndex, 1);
+                
+                // Add activity log
+                this.addActivity(`${member.name} ${member.surname} - Eliminazione multa ${categoryName}`, 
+                                'deletion', new Date(), fine.amount);
+
+                // Refresh the UI
+                this.updateAllSections();
+                
+                this.showNotification(
+                    `Multa "${categoryName}" di €${fine.amount} eliminata per ${member.name} ${member.surname}`, 
+                    'success'
+                );
+            } else {
+                throw new Error('Errore durante l\'eliminazione della multa');
+            }
+        } catch (error) {
+            console.error('Errore eliminazione multa:', error);
+            this.showNotification(
+                'Errore durante l\'eliminazione della multa', 
+                'error'
+            );
+        }
     }
 
 
@@ -5020,6 +5091,27 @@ notificationStyles.textContent = `
     
     .fine-payment input[type="checkbox"] {
         margin: 0;
+    }
+    
+    .fine-actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .btn-delete-fine {
+        padding: 0.4rem 0.8rem;
+        background: var(--danger-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: background-color 0.2s ease;
+    }
+    
+    .btn-delete-fine:hover {
+        background: #c0392b;
     }
     
     .donation-detail {

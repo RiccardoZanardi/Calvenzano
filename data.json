@@ -7,7 +7,29 @@
       "nickname": "Zana",
       "role": "Giocatore",
       "active": true,
-      "fines": [],
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
       "donations": [],
       "icsEvents": []
     },
@@ -18,7 +40,22 @@
       "nickname": "Monta",
       "role": "Giocatore",
       "active": true,
-      "fines": [],
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
       "donations": [],
       "icsEvents": []
     },
@@ -40,7 +77,29 @@
       "nickname": "Fanza",
       "role": "Giocatore",
       "active": true,
-      "fines": [],
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
       "donations": [],
       "icsEvents": []
     },
@@ -51,7 +110,36 @@
       "nickname": "Fadi",
       "role": "Giocatore",
       "active": true,
-      "fines": [],
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "materiale_in_campo_e/o_spogliatoio",
+          "amount": 3,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        }
+      ],
       "donations": [],
       "icsEvents": []
     },
@@ -62,7 +150,15 @@
       "nickname": "Randa",
       "role": "Giocatore",
       "active": true,
-      "fines": [],
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
       "donations": [],
       "icsEvents": []
     },
@@ -84,7 +180,883 @@
       "nickname": "Colo",
       "role": "Staff",
       "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755504518650",
+      "name": "Matteo",
+      "surname": "Martinoli",
+      "nickname": "Teo Martinoli",
+      "role": "Staff",
+      "active": true,
       "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544104275",
+      "name": "Manuel",
+      "surname": "Lanzini",
+      "nickname": "Lanzo",
+      "role": "Staff",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544306887",
+      "name": "Alessandro",
+      "surname": "Sala",
+      "nickname": "DS Sala",
+      "role": "Staff",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544344357",
+      "name": "Roberto",
+      "surname": "Gusmini",
+      "nickname": "Macy",
+      "role": "Staff",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544374550",
+      "name": "Matteo",
+      "surname": "Tassi",
+      "nickname": "Teo Tassi",
+      "role": "Staff",
+      "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544458906",
+      "name": "Alberto",
+      "surname": "Salvoldi",
+      "nickname": "Salvo",
+      "role": "Staff",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544571122",
+      "name": "Filippo",
+      "surname": "Pelati",
+      "nickname": "Pippo",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544599460",
+      "name": "Cristian",
+      "surname": "Imeri",
+      "nickname": "Criss",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544636102",
+      "name": "Andrea",
+      "surname": "Santinelli",
+      "nickname": "Santi",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544649812",
+      "name": "Emanuele",
+      "surname": "Premoli",
+      "nickname": "Premo",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544687920",
+      "name": "Davide",
+      "surname": "Casiraghi",
+      "nickname": "Casi",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544731433",
+      "name": "Andrea",
+      "surname": "Bellandi",
+      "nickname": "Bella",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544755040",
+      "name": "Alessandro",
+      "surname": "Marta",
+      "nickname": "Marta",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544776508",
+      "name": "Daniele",
+      "surname": "Sangiovanni",
+      "nickname": "Sangio",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544803560",
+      "name": "Oliver",
+      "surname": "Doda",
+      "nickname": "Olly",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544820841",
+      "name": "Nicolò",
+      "surname": "Cavalli",
+      "nickname": "Cava",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544839962",
+      "name": "Diego",
+      "surname": "Piana",
+      "nickname": "Djego",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544858579",
+      "name": "Alessandro",
+      "surname": "Passoni",
+      "nickname": "Passo",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "materiale_in_campo_e/o_spogliatoio",
+          "amount": 3,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544883226",
+      "name": "Andrea",
+      "surname": "Moriggi",
+      "nickname": "Morig",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544906755",
+      "name": "Giorgio",
+      "surname": "Gorghelli",
+      "nickname": "Gorghe",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755544920810",
+      "name": "Loris",
+      "surname": "Bonacina",
+      "nickname": "Bona",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755545008106",
+      "name": "Paolo",
+      "surname": "Grelle",
+      "nickname": "Grelle",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755545021507",
+      "name": "Matteo",
+      "surname": "Ghirlandetti",
+      "nickname": "Ghirla",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "materiale_in_campo_e/o_spogliatoio",
+          "amount": 3,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755545052123",
+      "name": "Marco",
+      "surname": "Longaretti",
+      "nickname": "Longa",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755545064652",
+      "name": "Simone",
+      "surname": "Alloni",
+      "nickname": "Allo",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755545081146",
+      "name": "Riccardo",
+      "surname": "Castellazzi",
+      "nickname": "Caste",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "materiale_in_campo_e/o_spogliatoio",
+          "amount": 3,
+          "date": "2025-08-23",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755545106094",
+      "name": "David",
+      "surname": "Bocanet",
+      "nickname": "Boca",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "materiale_in_campo_e/o_spogliatoio",
+          "amount": 3,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755601648780",
+      "name": "Adam",
+      "surname": "El Morabiti",
+      "nickname": null,
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755601672645",
+      "name": "Momo",
+      "surname": "Mouhamed",
+      "nickname": "Momo",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755601712795",
+      "name": "Cristian",
+      "surname": "Vertua",
+      "nickname": "Nico Paz",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": "Primo allenamento (lunedì 18/08)"
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-19",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-21",
+          "paid": false,
+          "description": null
+        },
+        {
+          "category": "allenamento/amichevole_no_g.s.,_si_pre-avviso",
+          "amount": 5,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": null
+        }
+      ],
+      "donations": [],
+      "icsEvents": []
+    },
+    {
+      "id": "1755626723909",
+      "name": "Tommaso",
+      "surname": "Sau",
+      "nickname": "Tom",
+      "role": "Giocatore",
+      "active": true,
+      "fines": [
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-20",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        },
+        {
+          "category": "ics",
+          "amount": 1,
+          "date": "2025-08-22",
+          "paid": false,
+          "description": "ICS - Partitella persa/saltata"
+        }
+      ],
       "donations": [],
       "icsEvents": []
     }
@@ -97,95 +1069,400 @@
       "active": true
     },
     "prova": {
-      "name": "Prova",
+      "name": "Squillo allenamento/amichevole",
       "type": "subcategory",
       "parentCategory": "inadempienze",
       "active": true,
-      "amount": 6,
-      "description": "€6 per prova"
+      "amount": 5,
+      "description": "€5 per squillo allenamento/amichevole"
     },
     "gnegne": {
-      "name": "Gnegne",
+      "name": "Squillo partita",
       "type": "subcategory",
       "parentCategory": "inadempienze",
       "active": true,
+      "amount": 10,
+      "description": "€10 per squillo partita"
+    },
+    "mancato_invio_report": {
+      "name": "Mancato invio report",
+      "type": "subcategory",
+      "parentCategory": "inadempienze",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per mancato invio report"
+    },
+    "mancato_pagamento_multa_>30_gg": {
+      "name": "Mancato pagamento multa >30 gg",
+      "type": "subcategory",
+      "parentCategory": "inadempienze",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per mancato pagamento multa >30 gg"
+    },
+    "comportamento": {
+      "name": "Comportamento",
+      "type": "category",
+      "parentCategory": null,
+      "active": true
+    },
+    "ammonizione_per_ineducazione": {
+      "name": "Ammonizione per ineducazione",
+      "type": "subcategory",
+      "parentCategory": "comportamento",
+      "active": true,
+      "amount": 10,
+      "description": "€10 per ammonizione per ineducazione"
+    },
+    "espulsione_per_ineducazione": {
+      "name": "Espulsione per ineducazione",
+      "type": "subcategory",
+      "parentCategory": "comportamento",
+      "active": true,
+      "amount": 40,
+      "description": "€40 per espulsione per ineducazione"
+    },
+    "espulsione_/_gg": {
+      "name": "Espulsione / gg",
+      "type": "subcategory",
+      "parentCategory": "comportamento",
+      "active": true,
+      "amount": 10,
+      "description": "€10 per espulsione / gg"
+    },
+    "ineducazione_vs_rosa/staff": {
+      "name": "Ineducazione vs rosa/staff",
+      "type": "subcategory",
+      "parentCategory": "comportamento",
+      "active": true,
+      "amount": 20,
+      "description": "€20 per ineducazione vs rosa/staff"
+    },
+    "eventi_ludici": {
+      "name": "Eventi Ludici",
+      "type": "category",
+      "parentCategory": null,
+      "active": true
+    },
+    "mancata_presenza_evento_conviviale_(<1_/_mese)": {
+      "name": "Mancata presenza evento conviviale (<1 / mese)",
+      "type": "subcategory",
+      "parentCategory": "eventi_ludici",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per mancata presenza evento conviviale (<1 / mese)"
+    },
+    "esordio": {
+      "name": "Esordio",
+      "type": "subcategory",
+      "parentCategory": "eventi_ludici",
+      "active": true,
+      "amount": 50,
+      "description": "€50 per esordio"
+    },
+    "primo_gol": {
+      "name": "Primo Gol",
+      "type": "subcategory",
+      "parentCategory": "eventi_ludici",
+      "active": true,
+      "amount": 50,
+      "description": "€50 per primo gol"
+    },
+    "compleanno": {
+      "name": "Compleanno",
+      "type": "subcategory",
+      "parentCategory": "eventi_ludici",
+      "active": true,
+      "amount": 50,
+      "description": "€50 per compleanno"
+    },
+    "dimenticanze": {
+      "name": "Dimenticanze",
+      "type": "category",
+      "parentCategory": null,
+      "active": true
+    },
+    "abbigliamento_non_ufficiale_allenamento/amichevole": {
+      "name": "Abbigliamento NON ufficiale allenamento/amichevole",
+      "type": "subcategory",
+      "parentCategory": "dimenticanze",
+      "active": true,
       "amount": 2,
-      "description": "€2 per gnegne"
+      "description": "€2 per abbigliamento non ufficiale allenamento/amichevole"
+    },
+    "abbigliamento_non_ufficiale_partita": {
+      "name": "Abbigliamento NON ufficiale partita",
+      "type": "subcategory",
+      "parentCategory": "dimenticanze",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per abbigliamento non ufficiale partita"
+    },
+    "mancanza_materiale_tecnico": {
+      "name": "Mancanza materiale tecnico",
+      "type": "subcategory",
+      "parentCategory": "dimenticanze",
+      "active": true,
+      "amount": 3,
+      "description": "€3 per mancanza materiale tecnico"
+    },
+    "materiale_in_campo_e/o_spogliatoio": {
+      "name": "Materiale in campo e/o spogliatoio",
+      "type": "subcategory",
+      "parentCategory": "dimenticanze",
+      "active": true,
+      "amount": 3,
+      "description": "€3 per materiale in campo e/o spogliatoio"
+    },
+    "materiale_in_altri_luoghi": {
+      "name": "Materiale in altri luoghi",
+      "type": "subcategory",
+      "parentCategory": "dimenticanze",
+      "active": true,
+      "amount": 3,
+      "description": "€3 per materiale in altri luoghi"
+    },
+    "assenze": {
+      "name": "Assenze",
+      "type": "category",
+      "parentCategory": null,
+      "active": true
+    },
+    "allenamento/amichevole_no_g.s.,_si_pre-avviso": {
+      "name": "Allenamento/amichevole NO g.c., SI pre-avviso",
+      "type": "subcategory",
+      "parentCategory": "assenze",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per allenamento/amichevole no g.c., si pre-avviso"
+    },
+    "allenamento/amichevole_no_g.c,_no_pre-avviso": {
+      "name": "Allenamento/amichevole NO g.c, NO pre-avviso",
+      "type": "subcategory",
+      "parentCategory": "assenze",
+      "active": true,
+      "amount": 15,
+      "description": "€15 per allenamento/amichevole no g.c, no pre-avviso"
+    },
+    "partita_no_g.c,_si_pre-avviso": {
+      "name": "Partita NO g.c, SI pre-avviso",
+      "type": "subcategory",
+      "parentCategory": "assenze",
+      "active": true,
+      "amount": 20,
+      "description": "€20 per partita no g.c, si pre-avviso"
+    },
+    "partita_no_g.c,_no_pre-avviso": {
+      "name": "Partita NO g.c, NO pre-avviso",
+      "type": "subcategory",
+      "parentCategory": "assenze",
+      "active": true,
+      "amount": 50,
+      "description": "€50 per partita no g.c, no pre-avviso"
+    },
+    "ritardi": {
+      "name": "Ritardi",
+      "type": "category",
+      "parentCategory": null,
+      "active": true
+    },
+    "allenamento_no_g.c,_si_pre-avviso": {
+      "name": "Allenamento NO g.c, SI pre-avviso",
+      "type": "subcategory",
+      "parentCategory": "ritardi",
+      "active": true,
+      "amount": 3,
+      "description": "€3 per allenamento no g.c, si pre-avviso"
+    },
+    "allenamento_no_g.c,_no_pre-avviso_(<15_min)": {
+      "name": "Allenamento NO g.c, NO pre-avviso (<15 min)",
+      "type": "subcategory",
+      "parentCategory": "ritardi",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per allenamento no g.c, no pre-avviso (<15 min)"
+    },
+    "allenamento_no_g.c,_no_pre-avviso_(>15_min)": {
+      "name": "Allenamento NO g.c, NO pre-avviso (>15 min)",
+      "type": "subcategory",
+      "parentCategory": "ritardi",
+      "active": true,
+      "amount": 10,
+      "description": "€10 per allenamento no g.c, no pre-avviso (>15 min)"
+    },
+    "partita_no_g.c,_si_preavviso": {
+      "name": "Partita NO g.c, SI preavviso",
+      "type": "subcategory",
+      "parentCategory": "ritardi",
+      "active": true,
+      "amount": 5,
+      "description": "€5 per partita no g.c, si preavviso"
+    },
+    "partita_no_g.c,_no_preavviso_(<15_min)": {
+      "name": "Partita NO g.c, NO preavviso (<15 min)",
+      "type": "subcategory",
+      "parentCategory": "ritardi",
+      "active": true,
+      "amount": 7,
+      "description": "€7 per partita no g.c, no preavviso (<15 min)"
+    },
+    "partita_no_g.c,_no_preavviso_(>15_min)": {
+      "name": "Partita NO g.c, NO preavviso (>15 min)",
+      "type": "subcategory",
+      "parentCategory": "ritardi",
+      "active": true,
+      "amount": 14,
+      "description": "€14 per partita no g.c, no preavviso (>15 min)"
     }
   },
   "activities": [
     {
-      "id": 1755502814672,
-      "description": "Membro aggiunto: Enrico Colombo",
-      "type": "member",
-      "date": "2025-08-18T07:40:14.672Z",
-      "amount": null
+      "id": 1756030009412,
+      "description": "Multa assegnata: Riccardo Zanardi - Mancata presenza evento conviviale (<1 / mese)",
+      "type": "fine",
+      "date": "2025-08-24T10:06:49.412Z",
+      "amount": 5
     },
     {
-      "id": 1755498801270,
-      "description": "Membro aggiunto: Manuel Bonetti",
-      "type": "member",
-      "date": "2025-08-18T06:33:21.270Z",
-      "amount": null
+      "id": 1755965996438,
+      "description": "Multa assegnata: Riccardo Castellazzi - Materiale in campo e/o spogliatoio",
+      "type": "fine",
+      "date": "2025-08-23T16:19:56.438Z",
+      "amount": 3
     },
     {
-      "id": 1755442001670,
-      "description": "Membro aggiunto: Luca Randazzo",
-      "type": "member",
-      "date": "2025-08-17T14:46:41.670Z",
-      "amount": null
-    },
-    {
-      "id": 1755441942349,
-      "description": "Offerta libera ricevuta da Blanca Lombardi",
+      "id": 1755965949899,
+      "description": "Offerta libera ricevuta da Monta",
       "type": "donation",
-      "date": "2025-08-17T14:45:42.349Z",
-      "amount": 2.55
+      "date": "2025-08-23T16:19:09.899Z",
+      "amount": 4
     },
     {
-      "id": 1755441868899,
-      "description": "Membro aggiunto: Mattia Fadigati",
-      "type": "member",
-      "date": "2025-08-17T14:44:28.899Z",
-      "amount": null
-    },
-    {
-      "id": 1755424718679,
-      "description": "Multa assegnata: Mattia Ciocca - Prova",
+      "id": 1755965904935,
+      "description": "Multa assegnata: Daniele Sangiovanni - Allenamento/amichevole NO g.c., SI pre-avviso",
       "type": "fine",
-      "date": "2025-08-17T09:58:38.679Z",
-      "amount": 6
+      "date": "2025-08-23T16:18:24.935Z",
+      "amount": 5
     },
     {
-      "id": 1755424718679,
-      "description": "Multa assegnata: Davide Montagnari - Prova",
+      "id": 1755965904935,
+      "description": "Multa assegnata: Matteo Tassi - Allenamento/amichevole NO g.c., SI pre-avviso",
       "type": "fine",
-      "date": "2025-08-17T09:58:38.679Z",
-      "amount": 6
+      "date": "2025-08-23T16:18:24.935Z",
+      "amount": 5
     },
     {
-      "id": 1755423187418,
-      "description": "Offerta libera ricevuta da Paolo \"Fanza\" Fanzaga",
-      "type": "donation",
-      "date": "2025-08-17T09:33:07.418Z",
-      "amount": 30
-    },
-    {
-      "id": 1755343879121,
-      "description": "Riccardo Zanardi - Pagamento multa undefined",
-      "type": "payment",
-      "date": "2025-08-16T11:31:19.121Z",
-      "amount": 1
-    },
-    {
-      "id": 1755343873017,
-      "description": "Multa assegnata: Riccardo Zanardi - Gnegne",
+      "id": 1755943055277,
+      "description": "Multa assegnata: Alessandro Passoni - Materiale in campo e/o spogliatoio",
       "type": "fine",
-      "date": "2025-08-16T11:31:13.017Z",
-      "amount": 2
+      "date": "2025-08-23T09:57:35.276Z",
+      "amount": 3
+    },
+    {
+      "id": 1755939825745,
+      "description": "Multa assegnata: Daniele Sangiovanni - Allenamento/amichevole NO g.c., SI pre-avviso",
+      "type": "fine",
+      "date": "2025-08-23T09:03:45.745Z",
+      "amount": 5
+    },
+    {
+      "id": 1755939825745,
+      "description": "Multa assegnata: Matteo Tassi - Allenamento/amichevole NO g.c., SI pre-avviso",
+      "type": "fine",
+      "date": "2025-08-23T09:03:45.745Z",
+      "amount": 5
+    },
+    {
+      "id": 1755939765350,
+      "description": "Multa assegnata: Mattia Fadigati - Materiale in campo e/o spogliatoio",
+      "type": "fine",
+      "date": "2025-08-23T09:02:45.350Z",
+      "amount": 3
+    },
+    {
+      "id": 1755886184279,
+      "description": "Multa assegnata: Cristian Vertua - Allenamento/amichevole NO g.c., SI pre-avviso",
+      "type": "fine",
+      "date": "2025-08-22T18:09:44.279Z",
+      "amount": 5
     }
   ],
   "icsEvents": [
+    {
+      "id": 1755885998148,
+      "date": "2025-08-22",
+      "participants": 11,
+      "members": [
+        "Riccardo Zanardi",
+        "Paolo Fanzaga",
+        "Davide Casiraghi",
+        "Andrea Bellandi",
+        "Diego Piana",
+        "Andrea Moriggi",
+        "Loris Bonacina",
+        "Marco Longaretti",
+        "David Bocanet",
+        "Adam El Morabiti",
+        "Tommaso Sau"
+      ]
+    },
+    {
+      "id": 1755799803045,
+      "date": "2025-08-21",
+      "participants": 13,
+      "members": [
+        "Davide Montagnari",
+        "Paolo Fanzaga",
+        "Mattia Fadigati",
+        "Luca Randazzo",
+        "Filippo Pelati",
+        "Emanuele Premoli",
+        "Andrea Bellandi",
+        "Oliver Doda",
+        "Alessandro Passoni",
+        "Loris Bonacina",
+        "Marco Longaretti",
+        "Adam El Morabiti",
+        "Momo Mouhamed"
+      ]
+    },
+    {
+      "id": 1755713129321,
+      "date": "2025-08-20",
+      "participants": 11,
+      "members": [
+        "Riccardo Zanardi",
+        "Davide Montagnari",
+        "Paolo Fanzaga",
+        "Mattia Fadigati",
+        "Emanuele Premoli",
+        "Andrea Bellandi",
+        "Andrea Moriggi",
+        "Loris Bonacina",
+        "Paolo Grelle",
+        "Riccardo Castellazzi",
+        "Tommaso Sau"
+      ]
+    },
+    {
+      "id": 1755626665861,
+      "date": "2025-08-19",
+      "participants": 12,
+      "members": [
+        "Riccardo Zanardi",
+        "Mattia Fadigati",
+        "Filippo Pelati",
+        "Andrea Santinelli",
+        "Andrea Bellandi",
+        "Oliver Doda",
+        "Alessandro Passoni",
+        "Andrea Moriggi",
+        "Matteo Ghirlandetti",
+        "Marco Longaretti",
+        "David Bocanet",
+        "Momo Mouhamed"
+      ]
+    },
     {
       "id": 1755342348857,
       "date": "2025-08-16",
@@ -288,7 +1565,31 @@
       "amount": 2.55,
       "date": "2025-08-17",
       "note": "Offerta libera"
+    },
+    {
+      "id": 1755542049034,
+      "donorName": "Monta",
+      "memberId": "1754731555027",
+      "amount": 5,
+      "date": "2025-08-18",
+      "note": "Offerta libera"
+    },
+    {
+      "id": 1755635216793,
+      "donorName": "Elisabetta Onori",
+      "memberId": null,
+      "amount": 1,
+      "date": "2025-08-19",
+      "note": "Offerta libera"
+    },
+    {
+      "id": 1755965949899,
+      "donorName": "Monta",
+      "memberId": "1754731555027",
+      "amount": 4,
+      "date": "2025-08-23",
+      "note": "Offerta libera"
     }
   ],
-  "lastUpdated": "2025-08-18T07:40:14.966Z"
+  "lastUpdated": "2025-08-24T10:07:19.955Z"
 }
